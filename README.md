@@ -10,12 +10,18 @@ A Bagh-Chal (tigers and goats) game-playing agent using Minimax with Alpha-Beta 
 
 ## Status
 
-Phases 0–4 done: rules, search, evaluation, adapter and CLI are built and tested (`python -m pytest -q`), and `python -m experiments check-engine --engine baghchal.adapter:Adapter` reports 0 failures. `search.py` and `evaluation.py` were written by Claude Code at Pranav's direction (see `docs/PRD.md` §10); Shalom and Vishal own and review them.
+- **Done:** rules, search, evaluation, adapter and CLI are built and tested (`python -m pytest -q`); `python -m experiments check-engine --engine baghchal.adapter:Adapter` reports 0 failures.
+- **Done:** experiments E1 and E2 are run, with results, tables and plots committed in `results/`.
+- **Done:** report material in `docs/report/` (skeleton with tables, appendix tables, slide outline) and a draft of the implementation notes.
+- **Extra:** a local browser UI for playing the agent (`python -m web.server`); it is not part of the graded core.
+- **Left for the team:** report and slide prose, the `[OWNER]` notes, the AI declaration, Shalom's and Vishal's reviews (prompts 2b and 3b in `docs/prompts.md`), and viva practice.
+
+`search.py` and `evaluation.py` were written by Claude Code at Pranav's direction (see `docs/PRD.md` §10); Shalom and Vishal own and review them.
 
 ## Where to start
 
 1. Read `docs/PRD.md` — scope, frozen game rules, interfaces, milestones.
-2. Follow `docs/prompts.md` from Phase 0.
+2. `docs/prompts.md` holds the phase-by-phase prompts (Phases 0–5 are done; the review and viva prompts are next).
 3. `CLAUDE.md` holds the working rules Claude Code follows in this repo.
 
 ## Setup

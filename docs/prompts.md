@@ -2,14 +2,16 @@
 
 How to use this file: open a terminal in the repo, run `claude`, and paste one prompt at a time. Wait for each to finish and check its **Done when** before moving on. Every prompt assumes Claude Code has read `CLAUDE.md` (it loads automatically) and `docs/PRD.md`.
 
+> **Ownership changed on 2026-10-13 (PRD §3 C3, §6.1, §10).** Shalom and Vishal were unavailable, so at Pranav's direction Claude Code wrote the bodies of `search.py` and `evaluation.py` (including the initial weights). The Phase 2a and 3a prompts below are kept as the original plan and record. They were run with Claude Code writing the stubs and tests, then the code. Shalom and Vishal now *own* those files: they run the 2b and 3b review prompts to understand and sign them off. The final report's declaration must say Claude Code wrote them.
+
 Who runs what:
 
 | Phase | Runs the prompt | Writes the AI code |
 |---|---|---|
 | 0 Setup | Pranav | — |
 | 1 Rules | Pranav (or anyone) | — |
-| 2 Search | Shalom | **Shalom** |
-| 3 Evaluation | Vishal | **Vishal** |
+| 2 Search | Pranav (2a); Shalom reviews (2b) | Claude Code, owned by **Shalom** (was: Shalom) |
+| 3 Evaluation | Pranav (3a); Vishal reviews (3b) | Claude Code, owned by **Vishal** (was: Vishal) |
 | 4 Integration | Pranav | — |
 | 5 Experiments | Pranav | — |
 | 6 Report & viva | Everyone | — |
@@ -76,7 +78,9 @@ I'm Vishal. I need to understand and sign off the rules code before I build the 
 
 ---
 
-## Phase 2 — Search (Shalom writes the algorithm)
+## Phase 2 — Search (planned: Shalom writes the algorithm)
+
+> Superseded 2026-10-13: Claude Code wrote `search.py` (see the note at the top). 2a is the original plan; Shalom now runs 2b to review and own the code.
 
 ### 2a. Stubs and tests (Shalom runs this)
 
@@ -101,17 +105,19 @@ Then explain to me, in words and pseudocode only (no Python), how minimax and al
 
 **Then Shalom writes `search.py` himself.** Use the course textbook (Module 3) pseudocode as the reference.
 
-### 2b. Review (Shalom runs this after writing it)
+### 2b. Review (Shalom runs this; he owns search.py)
 
 ```text
-I've written baghchal/search.py. Run tests/test_search.py and review my code. For each failing test, tell me what's wrong and where, in words; do not write the fix. Also check: is stats.nodes incremented first in every call? Is tie-breaking strict as per R11? Is the PV built correctly? Is anything mutating state? Comment on readability and suggest where comments would help a viva examiner, but leave the writing to me.
+I'm Shalom. Claude Code wrote baghchal/search.py and I own it now; I'll be examined on it. Run tests/test_search.py, then walk me through the file line by line against PRD §6.3 and the textbook pseudocode: where stats.nodes is incremented and why it must be first, why terminal is checked before the depth cutoff, how ply reaches the R9 utility, how alpha and beta are updated and when the cut happens, why tie-breaking is strict (R11), and how the PV is built. Trace alpha-beta on the R&N Fig. 5.2 tree with me by hand. Then quiz me with 5 questions. Don't change the code unless I ask; if I rewrite any part, record it in PRD §10.
 ```
 
-**Done when:** all of `tests/test_search.py` passes with Shalom's code; merge to `main`.
+**Done when:** all of `tests/test_search.py` passes and Shalom can explain every line; merge to `main`.
 
 ---
 
-## Phase 3 — Evaluation (Vishal writes the evaluation)
+## Phase 3 — Evaluation (planned: Vishal writes the evaluation)
+
+> Superseded 2026-10-13: Claude Code wrote `evaluation.py` and the initial weights (see the note at the top). 3a is the original plan; Vishal now runs 3b to review the features, decide on the weights and own the code.
 
 ### 3a. Stubs and tests (Vishal runs this)
 
@@ -130,15 +136,15 @@ Branch: phase-3-eval. I'm Vishal and I will write the evaluation myself. Per CLA
 Then explain to me, in words only: why the six features are combined into ONE zero-sum score instead of two separate objectives, why that keeps alpha-beta sound, why the bound matters, and what I should think about when choosing relative weights. Don't propose numbers.
 ```
 
-**Then Vishal writes `evaluation.py` and chooses the weights**, with a one-line justification per weight in a comment.
+**Planned:** Vishal writes `evaluation.py` and chooses the weights, with a one-line justification per weight in a comment. **Actual:** Claude Code wrote both; Vishal reviews and owns them (3b).
 
-### 3b. Review (Vishal runs this)
+### 3b. Review (Vishal runs this; he owns evaluation.py)
 
 ```text
-I've written baghchal/evaluation.py. Run tests/test_evaluation.py and review it. For failures, explain in words what's wrong. Then play 10 quick self-play games at depth 2 with my evaluation (seeded) and show me the final boards and results so I can sanity-check the agent's behaviour. Don't change my code.
+I'm Vishal. Claude Code wrote baghchal/evaluation.py and its initial WEIGHTS; I own it now and must justify the weights at the viva. Run tests/test_evaluation.py, then walk me through how each of the six features is computed against PRD §6.4, and the one-line reason given for each weight. Explain in words why one zero-sum score keeps alpha-beta sound and why the ±100,000 bound matters. Then play 10 quick self-play games at depth 2 (seeded) and show me the final boards and results. E2 shows the designed eval wins 96% as tiger but only 32% as goat, so help me decide whether to keep or change the weights. Don't change the weights unless I tell you the new values; if I change them, re-run E1 and E2 and record the change in PRD §10.
 ```
 
-**Done when:** all of `tests/test_evaluation.py` passes; merge to `main`.
+**Done when:** all of `tests/test_evaluation.py` passes and Vishal has kept or changed the weights with his own justification; merge to `main`.
 
 ---
 
@@ -183,7 +189,7 @@ Run the experiment pipeline. Don't modify experiments/ unless you can show a bug
 ### Implementation notes draft
 
 ```text
-Read the codebase and draft ONLY the "Implementation notes" section of the report (PRD §9 item 4) as docs/implementation_notes.md: state representation, how topology is generated from the rule and why, the jump lemma, how nodes are counted, tie-breaking, and how positions were generated. Describe what the code does; mark every place where the authors (Shalom for search, Vishal for evaluation) should add their own reasoning with [AUTHOR: ...].
+Read the codebase and draft ONLY the "Implementation notes" section of the report (PRD §9 item 4) as docs/implementation_notes.md: state representation, how topology is generated from the rule and why, the jump lemma, how nodes are counted, tie-breaking, and how positions were generated. Describe what the code does; mark every place where the owners (Shalom for search, Vishal for evaluation) should add their own reasoning with [OWNER: ...].
 ```
 
 ### Viva practice (each member separately)
