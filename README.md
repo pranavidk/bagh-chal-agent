@@ -10,7 +10,7 @@ A Bagh-Chal (tigers and goats) game-playing agent using Minimax with Alpha-Beta 
 
 ## Status
 
-Starter repo. The experiment framework (`experiments/`) is built and tested. The agent (`baghchal/`) is built phase by phase following `docs/prompts.md`.
+Rules (`board`, `state`, `rules`, `game`), the adapter and the CLI are built and tested. `search.py` and `evaluation.py` are stubs with acceptance tests (`tests/test_search.py`, `tests/test_evaluation.py`) waiting for their bodies; until then `analyse`, `play` (agent moves), `selfplay` and `check-engine` stop with `NotImplementedError`.
 
 ## Where to start
 
@@ -29,10 +29,33 @@ python -m pytest -q
 
 ## Running
 
-Filled in during Phase 4. Experiment commands are documented in `docs/experiments.md`.
-
-Rules hot-path benchmark (not part of the test suite; prints calls/s against the targets):
+All commands run from the repo root inside the venv (`source .venv/bin/activate`). Points are numbered 0–24, `index = 5*row + col`, row 0 at the top; boards use `T` tiger, `G` goat, `.` empty.
 
 ```bash
-python benchmarks/bench_rules.py
+# Board with point indices and degrees
+python -m baghchal rules
+
+# Analyse any position: move, score (tiger's side), nodes, time, principal variation
+python -m baghchal analyse --board "T...T/...../...../...../T...T" --to-move GOAT --in-hand 20 --captured 0 --depth 4
+python -m baghchal analyse --board "TG.../GG.../..TG./...../T...T" --to-move TIGER --captured 4 --depth 3 --algorithm minimax --eval baseline
+
+# Same, reading the five board rows from a file (one row per line; "T . . . T" spacing is fine)
+python -m baghchal analyse --file pos.txt --to-move GOAT --captured 0
+
+# Play against the agent (type 12 to place, 7-12 to move, 'moves' to list, 'quit' to stop)
+python -m baghchal play --human GOAT --depth 3
+
+# Agent against itself
+python -m baghchal selfplay --depth 3 [--tiger-eval designed --goat-eval baseline]
+```
+
+`analyse` options: `--depth` (default 4), `--algorithm alphabeta|minimax` (default alphabeta), `--eval designed|baseline` (default designed). `--in-hand` defaults to 20 − goats on the board − `--captured`; `--captured` defaults to 0. Bad input prints one `error:` line and exits 1.
+
+Experiment commands (`check-engine`, `generate`, `e1`, `e2`, `report`) are in `docs/experiments.md`; the engine spec is `baghchal.adapter:Adapter`.
+
+Benchmarks (not part of the test suite):
+
+```bash
+python benchmarks/bench_rules.py     # rules hot path: calls/s against targets
+python benchmarks/bench_search.py    # minimax vs alpha-beta, depths 2-4, against PRD §7 limits
 ```
