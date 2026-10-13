@@ -30,3 +30,9 @@ python -m pytest -q
 ## Running
 
 Filled in during Phase 4. Experiment commands are documented in `docs/experiments.md`.
+
+Rules hot-path benchmark (not part of the test suite; prints calls/s against the targets):
+
+```bash
+python benchmarks/bench_rules.py
+```
