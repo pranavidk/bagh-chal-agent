@@ -1,6 +1,6 @@
 """Acceptance tests for baghchal.search (PRD §6.3), against the §6.2 Game protocol.
 
-The search bodies are written by Shalom; these tests were written first.
+Tests written first, then the search (both by Claude Code; see PRD §10).
 A trivial evaluator (goats captured) is used so nothing here depends on Phase 3.
 """
 from __future__ import annotations
