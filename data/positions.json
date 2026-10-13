@@ -1,0 +1,466 @@
+{
+  "meta": {
+    "generated_by": "experiments.generate_positions",
+    "generated_at": "2026-10-13T05:57:45+00:00",
+    "seed": 2026,
+    "per_phase": 15,
+    "games": 200,
+    "epsilon": 0.3,
+    "policy_depth": 2,
+    "skip_plies": 6,
+    "max_plies": 300,
+    "candidate_pool_size": 8792
+  },
+  "positions": [
+    {
+      "board": [
+        "..G.T",
+        ".T...",
+        "G...G",
+        ".T.T.",
+        "..G.."
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 16,
+      "goats_captured": 0,
+      "id": "P01",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "T....",
+        ".....",
+        "G...G",
+        ".T.T.",
+        "..G.T"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 16,
+      "goats_captured": 1,
+      "id": "P02",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        ".....",
+        "...T.",
+        "GTG..",
+        "TGGG.",
+        "....T"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 15,
+      "goats_captured": 0,
+      "id": "P03",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "..GGG",
+        "...T.",
+        ".TT.G",
+        "..T..",
+        "....."
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 14,
+      "goats_captured": 2,
+      "id": "P04",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        ".GG..",
+        ".G.TG",
+        "....G",
+        "TT.T.",
+        "..G.."
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 13,
+      "goats_captured": 1,
+      "id": "P05",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        ".GG.T",
+        ".T...",
+        "G...G",
+        ".T..T",
+        "..G.G"
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 13,
+      "goats_captured": 1,
+      "id": "P06",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "..G..",
+        ".T.T.",
+        "....G",
+        ".GT.G",
+        "GGGT."
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 12,
+      "goats_captured": 1,
+      "id": "P07",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "GGGT.",
+        ".G...",
+        "G.T.G",
+        ".T.T.",
+        "..GG."
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 12,
+      "goats_captured": 0,
+      "id": "P08",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        ".T.G.",
+        "T..G.",
+        "TGG..",
+        "..G..",
+        "T...."
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 11,
+      "goats_captured": 4,
+      "id": "P09",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "GGG..",
+        ".....",
+        "..TT.",
+        ".G.T.",
+        "GT..."
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 11,
+      "goats_captured": 4,
+      "id": "P10",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "..GGG",
+        ".T..T",
+        "GG.GT",
+        "..T..",
+        "GGG.."
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 9,
+      "goats_captured": 2,
+      "id": "P11",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "G.GGG",
+        "GTGGG",
+        "G.TGG",
+        ".T.T.",
+        ".GG.G"
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 6,
+      "goats_captured": 0,
+      "id": "P12",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "GGG.G",
+        ".GGT.",
+        "GGG.T",
+        ".GGT.",
+        "GT..."
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 6,
+      "goats_captured": 2,
+      "id": "P13",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "GTGGG",
+        "G..TG",
+        ".TT..",
+        "..GGG"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 4,
+      "goats_captured": 2,
+      "id": "P14",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        "GGGTG",
+        "G.TTG",
+        "G...T",
+        "..GGG",
+        ".GGGG"
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 4,
+      "goats_captured": 2,
+      "id": "P15",
+      "note": "",
+      "phase": "placement"
+    },
+    {
+      "board": [
+        ".GGGG",
+        "GGGTG",
+        "G.TGG",
+        "GTTGG",
+        "GGG.G"
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 0,
+      "goats_captured": 2,
+      "id": "M01",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        ".GGGG",
+        "GGGTG",
+        "GGG.G",
+        "GT.T.",
+        "GGT.G"
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M02",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        ".GGTG",
+        ".GGGG",
+        "G.GGG",
+        "G.GGT",
+        "TGGT."
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M03",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "G.G.G",
+        "TGGGT",
+        "G..GG",
+        "GG.TG",
+        "GGGTG"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M04",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "G.GGG",
+        "GGTGG",
+        "GG.T.",
+        "T..GT",
+        "GGGGG"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M05",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        ".G.GG",
+        "G.TGG",
+        "GT.TT",
+        "GGGGG"
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 0,
+      "goats_captured": 3,
+      "id": "M06",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "G.GG.",
+        "G.TTG",
+        "T.TGG",
+        "GGGGG"
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 0,
+      "goats_captured": 3,
+      "id": "M07",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "GGGGG",
+        ".GTGG",
+        "TTGGT",
+        "GGGGG"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 0,
+      "goats_captured": 0,
+      "id": "M08",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "GGTGG",
+        "G..TG",
+        ".TGGT",
+        "..GGG"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M09",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "GGTGG",
+        "GG.TG",
+        "GG..T",
+        "GG..T"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M10",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "GTGG.",
+        "G.T.G",
+        ".TTGG",
+        "GGGGG"
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 0,
+      "goats_captured": 3,
+      "id": "M11",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "GTGGG",
+        "GGT.G",
+        "GG.TG",
+        "G.TG."
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 0,
+      "goats_captured": 3,
+      "id": "M12",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "GTGGG",
+        "GT.TG",
+        "G.T.G",
+        "G.GG."
+      ],
+      "to_move": "TIGER",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M13",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGGG",
+        "GTGGG",
+        "GT.TG",
+        "G.TGG",
+        "G..G."
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M14",
+      "note": "",
+      "phase": "movement"
+    },
+    {
+      "board": [
+        "GGGTG",
+        "GGG.G",
+        "..T.T",
+        "GGGTG",
+        "GGG.G"
+      ],
+      "to_move": "GOAT",
+      "goats_in_hand": 0,
+      "goats_captured": 4,
+      "id": "M15",
+      "note": "",
+      "phase": "movement"
+    }
+  ]
+}
