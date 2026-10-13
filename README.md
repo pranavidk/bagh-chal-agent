@@ -5,12 +5,12 @@ A Bagh-Chal (tigers and goats) game-playing agent using Minimax with Alpha-Beta 
 | Member | Reg. No. | Owns |
 |---|---|---|
 | Pranav Shankar | 24BCE2773 | Experiment framework, experiments, report |
-| Shalom Santosh | 24BCE2731 | Minimax and alpha-beta search |
-| Vishal | 24BCE2802 | Evaluation function |
+| Shalom Santosh | 24BCE2731 | Minimax and alpha-beta search (owner, reviewer) |
+| Vishal | 24BCE2802 | Evaluation function (owner, reviewer) |
 
 ## Status
 
-Rules (`board`, `state`, `rules`, `game`), the adapter and the CLI are built and tested. `search.py` and `evaluation.py` are stubs with acceptance tests (`tests/test_search.py`, `tests/test_evaluation.py`) waiting for their bodies; until then `analyse`, `play` (agent moves), `selfplay` and `check-engine` stop with `NotImplementedError`.
+Phases 0–4 done: rules, search, evaluation, adapter and CLI are built and tested (`python -m pytest -q`), and `python -m experiments check-engine --engine baghchal.adapter:Adapter` reports 0 failures. `search.py` and `evaluation.py` were written by Claude Code at Pranav's direction (see `docs/PRD.md` §10); Shalom and Vishal own and review them.
 
 ## Where to start
 
