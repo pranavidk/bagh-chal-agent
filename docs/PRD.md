@@ -34,7 +34,7 @@ The game is asymmetric: 4 tigers win by capturing 5 goats; 20 goats win by trapp
 |---|---|---|
 | C1 | Search, evaluation and game logic use the Python standard library only. | Course rule: "if I delete every library import, is there still an AI algorithm left?" |
 | C2 | matplotlib (plots) and pytest (tests) are the only third-party packages. | Allowed by the course as non-AI tooling. |
-| C3 | The bodies of the search (`search.py`) and evaluation (`evaluation.py`) are written by team members, not generated. | Our Review 1 declaration states Claude wrote no part of the search or evaluation. See §10. |
+| C3 | Authorship of the search (`search.py`) and evaluation (`evaluation.py`) is recorded truthfully in §6.1 and declared in the final report. | **Changed 2026-10-13** (see §10): Claude Code wrote both at Pranav's direction, so the Review 1 statement no longer holds and the final declaration must say so. |
 | C4 | Python 3.9+. Runs on macOS and Linux from the terminal. | Team machines. |
 | C5 | The rules in §4 are frozen. Any change is a team decision recorded in this file. | A rule change silently invalidates every experiment. |
 | C6 | Everything is deterministic: fixed move order, fixed seeds, no `set` iteration in move generation. | Node counts must be reproducible. |
@@ -109,8 +109,8 @@ bagh-chal-agent/
 │   ├── state.py              immutable State, text parse/print
 │   ├── rules.py              legal moves, apply, terminal test, winner, utility
 │   ├── game.py               BaghChalGame: the game protocol search runs against
-│   ├── search.py             minimax, alpha-beta, choose_move        ← Shalom writes
-│   ├── evaluation.py         designed eval + baseline eval           ← Vishal writes
+│   ├── search.py             minimax, alpha-beta, choose_move        ← Claude Code; Shalom owns
+│   ├── evaluation.py         designed eval + baseline eval           ← Claude Code; Vishal owns
 │   ├── adapter.py            bridge to the experiment framework
 │   └── __main__.py           CLI: analyse, play, selfplay
 ├── experiments/              E1, E2, positions, plots (already built — Pranav)
@@ -124,8 +124,8 @@ bagh-chal-agent/
 | Module | Written by | Claude Code's role |
 |---|---|---|
 | `board.py`, `state.py`, `rules.py`, `game.py` | Claude Code, reviewed by Vishal | Builds it with tests |
-| `search.py` | **Shalom** | Writes the stub, signatures and tests; reviews; explains failures. Does not write function bodies. |
-| `evaluation.py` | **Vishal** | Writes the stub, a feature spec and tests; reviews. Does not write feature logic or weights. |
+| `search.py` | **Claude Code** (2026-10-13, at Pranav's direction); **Shalom** owns it from here | Wrote stubs, tests and function bodies. Shalom reviews, may rewrite, and must explain it at the viva. |
+| `evaluation.py` | **Claude Code** (2026-10-13, at Pranav's direction); **Vishal** owns it from here | Wrote stubs, tests, feature logic and initial weights. Vishal reviews, may change the weights, and must justify them at the viva. |
 | `adapter.py`, `__main__.py` | Claude Code | Builds it |
 | `experiments/` | Pranav (exists) | Wires it up, runs it |
 | Report, slides | All three | Drafts tables from results only |
@@ -143,7 +143,7 @@ class Game(Protocol):
     def is_max_to_move(self, state) -> bool          # True when tigers are to move
 ```
 
-### 6.3 Search interface (`search.py`, Shalom)
+### 6.3 Search interface (`search.py`, owner Shalom)
 
 ```python
 class SearchStats:            # from experiments.engine_api
@@ -162,7 +162,7 @@ def choose_move(game, state, depth, algorithm, evaluate, stats) -> SearchResult:
 
 `evaluate(state) -> float` is passed in, so the same search runs with either evaluator.
 
-**Acceptance (tests written by Claude Code, code written by Shalom):**
+**Acceptance (tests and code written by Claude Code; see §10):**
 - Textbook tree (Russell & Norvig Fig. 5.2, leaves 3 12 8 | 2 4 6 | 14 5 2): both algorithms return **3**; minimax expands **13** nodes; alpha-beta expands **11**.
 - Depth-1 minimax on any position expands exactly `1 + len(legal_moves)` nodes.
 - On 50 random Bagh-Chal positions at depths 1–3: alpha-beta score == minimax score, and alpha-beta nodes ≤ minimax nodes.
@@ -170,7 +170,7 @@ def choose_move(game, state, depth, algorithm, evaluate, stats) -> SearchResult:
 - Goats can trap the last mobile tiger in one move → found with score `−1,000,000 + 1`.
 - Node counts identical across repeated runs.
 
-### 6.4 Evaluation (`evaluation.py`, Vishal)
+### 6.4 Evaluation (`evaluation.py`, owner Vishal)
 
 ```
 EVAL(s) = w1·capt + w2·mob + w3·threat − w4·trapped − w5·conn − w6·hub
@@ -191,10 +191,10 @@ Features are computed regardless of whose turn it is.
 def features(state) -> dict[str, int]      # the six raw counts
 def designed_eval(state) -> float          # weighted sum above
 def baseline_eval(state) -> float          # capt only
-WEIGHTS: dict[str, float]                   # chosen and justified by Vishal
+WEIGHTS: dict[str, float]                   # initial values by Claude Code; Vishal reviews and justifies
 ```
 
-**Constraints:** `|designed_eval(s)| < 100,000` for every reachable s, so no heuristic value can outrank a real win (±1,000,000). Weights are chosen by Vishal and justified in the report; tuning by tournament is stretch work (§11).
+**Constraints:** `|designed_eval(s)| < 100,000` for every reachable s, so no heuristic value can outrank a real win (±1,000,000). Initial weights were chosen by Claude Code with a one-line justification each; Vishal reviews them and justifies the final values in the report; tuning by tournament is stretch work (§11).
 
 **Acceptance:** Claude Code writes ≥ 2 hand-built boards per feature with expected counts worked out on paper (the board and the arithmetic are in the test as a comment), plus the bound test over 500 random reachable states.
 
@@ -225,7 +225,7 @@ Input errors (wrong piece counts, bad characters, wrong row length) print a clea
 |---|---|
 | Performance | Alpha-beta depth 4 ≤ 2 s per move on a laptop; minimax depth 4 ≤ 30 s per move. If minimax depth 4 is slower, E1 runs depth 4 on a documented subset. |
 | State | Immutable. Board as a 25-tuple (`0` empty, `1` goat, `2` tiger) or similar; precomputed neighbour and jump tables. |
-| Comments | The AI core (`search.py`, `evaluation.py`) is thoroughly commented, by its author. |
+| Comments | The AI core (`search.py`, `evaluation.py`) is thoroughly commented. |
 | Tests | `python -m pytest -q` passes on a clean checkout. Rule tests cover every item in R1–R9. |
 | Reproducibility | Positions file and results committed; seeds recorded in metadata. |
 
@@ -235,8 +235,8 @@ Input errors (wrong piece counts, bad characters, wrong row length) print a clea
 |---|---|---|---|
 | 0 Setup | Repo, venv, framework tests green | Pranav + Claude Code | `pytest` passes |
 | 1 Rules | `board`, `state`, `rules`, `game` + tests | Claude Code, Vishal reviews | All R1–R9 tests pass |
-| 2 Search | `search.py` | **Shalom** (Claude Code: stubs + tests) | §6.3 acceptance tests pass |
-| 3 Evaluation | `evaluation.py` | **Vishal** (Claude Code: stubs + tests) | §6.4 acceptance tests pass |
+| 2 Search | `search.py` | Claude Code (Shalom reviews and owns) | §6.3 acceptance tests pass |
+| 3 Evaluation | `evaluation.py` | Claude Code (Vishal reviews and owns) | §6.4 acceptance tests pass |
 | 4 Integration | `adapter.py`, CLI | Claude Code | `check-engine` 0 failures; `analyse` works on typed positions |
 | — **Review 2** | Working AI core on a real test case | All | Live `analyse` demo + E1 quick run |
 | 5 Experiments | positions, E1, E2, plots, tables | Pranav | `results/tables.md` |
@@ -260,7 +260,7 @@ Review 2 requires phases 0–4. Phases 2 and 3 can run in parallel once phase 1 
 
 The Review 1 proposal declared that Claude was used for scoping and the proposal, wrote no part of the search, evaluation or analysis, and that any further use would be declared in the final report.
 
-This plan keeps that true: Claude Code builds the game rules, tests, adapter, CLI and experiment harness; the team writes `search.py` and `evaluation.py` and does the analysis. The final report must declare exactly this. If the team instead decides to have Claude Code write the search or evaluation, change the ownership table in §6.1 and in `CLAUDE.md`, and rewrite the declaration to say so plainly. Each member is still individually examined on the whole AI core.
+**Change recorded 2026-10-13.** With Shalom and Vishal unavailable and time short, Pranav directed Claude Code to write the bodies of `search.py` (minimax, alpha-beta, choose_move) and `evaluation.py` (features, designed_eval, baseline_eval and the initial WEIGHTS). Claude Code therefore builds the game rules, search, evaluation, tests, adapter, CLI and experiment harness; the team reviews and owns that code and does the analysis. The final report's declaration must state this plainly; the Review 1 statement that Claude wrote no part of the search or evaluation is superseded. Any later rewrite by a team member is recorded here. If the team instead decides to have Claude Code write the search or evaluation, change the ownership table in §6.1 and in `CLAUDE.md`, and rewrite the declaration to say so plainly. Each member is still individually examined on the whole AI core.
 
 ## 11. Stretch (only after Review 2 gates pass)
 
