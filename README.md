@@ -60,6 +60,16 @@ python benchmarks/bench_rules.py     # rules hot path: calls/s against targets
 python benchmarks/bench_search.py    # minimax vs alpha-beta, depths 2-4, against PRD §7 limits
 ```
 
+## Play in the browser
+
+A local web UI (not part of the graded core, which is CLI-only per the PRD) talks to the same engine:
+
+```bash
+python -m web.server            # then open http://127.0.0.1:8765
+```
+
+Click a point to place a goat, or click a piece and then its destination. The panel shows the agent's move, score, positions searched, time and expected line, and a command to re-check any position with `analyse`. The compiled bundle `web/static/app.js` is committed; to rebuild after editing `web/frontend/src/App.jsx`: `cd web/frontend && npm install && npm run build`.
+
 ## Results and report
 
 - `results/`: E1 and E2 raw CSVs, summaries, `tables.md` and the three plots (`python -m experiments report` rebuilds them from the CSVs).
