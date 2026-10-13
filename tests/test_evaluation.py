@@ -1,6 +1,6 @@
 """Acceptance tests for baghchal.evaluation (PRD §6.4).
 
-The feature logic and weights are written by Vishal; these tests were written first.
+Tests written first, then the feature logic and initial weights (both by Claude Code; PRD §10).
 Every expected count below is worked out by hand in the comment above its board.
 Index = 5*row + col. Degrees (R1): corners 3; (0,2) (2,0) (2,4) (4,2) 5;
 (1,1) (1,3) (2,2) (3,1) (3,3) = 6, 8, 12, 16, 18 are 8; odd points 3 or 4.
