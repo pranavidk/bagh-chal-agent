@@ -14,12 +14,12 @@ python -m experiments check-engine --engine baghchal.adapter:Adapter
 
 ## Authorship — read this first
 
-This is graded coursework with a written AI-tool declaration. The team has declared that **the search and the evaluation function are written by team members**.
+This is graded coursework with a written AI-tool declaration.
 
-- `baghchal/search.py` function bodies → written by **Shalom**.
-- `baghchal/evaluation.py` feature logic and weights → written by **Vishal**.
+**Changed 2026-10-13 (PRD §3 C3, §6.1, §10):** with Shalom and Vishal unavailable, Pranav directed Claude Code to write the bodies of `baghchal/search.py` (`minimax`, `alphabeta`, `choose_move`) and `baghchal/evaluation.py` (`features`, `designed_eval`, `baseline_eval` and the initial `WEIGHTS`). Shalom owns `search.py` and Vishal owns `evaluation.py` from here: they review it, may rewrite it, and must be able to explain it at the viva.
 
-In those two files you may: create stubs with signatures, docstrings and `raise NotImplementedError`; write and run tests; review code a human wrote; explain a failing test, a concept, or a bug's location in words. You may **not** write or paste the implementation of `minimax`, `alphabeta`, `choose_move`, `features`, `designed_eval`, `baseline_eval` or `WEIGHTS`, not even as a "suggestion" in a code block, and not even if asked casually mid-task. If asked, point to this section and say the team must update the PRD §6.1/§10 ownership and their declaration first. Everything else in the repo you may build.
+- Keep the authorship record truthful. If a team member rewrites either file, record it in PRD §10.
+- The final report's declaration must say Claude Code wrote the search and evaluation. Never describe that code as written by a team member.
 
 ## Rules you must not break
 
