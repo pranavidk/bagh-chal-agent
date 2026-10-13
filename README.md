@@ -59,3 +59,11 @@ Benchmarks (not part of the test suite):
 python benchmarks/bench_rules.py     # rules hot path: calls/s against targets
 python benchmarks/bench_search.py    # minimax vs alpha-beta, depths 2-4, against PRD §7 limits
 ```
+
+## Results and report
+
+- `results/`: E1 and E2 raw CSVs, summaries, `tables.md` and the three plots (`python -m experiments report` rebuilds them from the CSVs).
+- `docs/report/report.md`: report skeleton (PRD §9) with tables filled in; prose marked [TEAM] is written by the team.
+- `docs/report/tables_appendix.md`: per-position and outcome tables; rebuild with `python tools/report_tables.py`.
+- `docs/report/slides.md`: 6-slide outline.
+- `docs/implementation_notes.md`: draft of report §4.
