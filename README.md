@@ -12,9 +12,9 @@ A Bagh-Chal (tigers and goats) game-playing agent using Minimax with Alpha-Beta 
 
 - **Done:** rules, search, evaluation, adapter and CLI are built and tested (`python -m pytest -q`); `python -m experiments check-engine --engine baghchal.adapter:Adapter` reports 0 failures.
 - **Done:** experiments E1 and E2 are run, with results, tables and plots committed in `results/`.
-- **Done:** report material in `docs/report/` (skeleton with tables, appendix tables, slide outline) and a draft of the implementation notes.
+- **Done:** report text, slides and implementation notes in `docs/report/` and `docs/`, written by Claude Code on 2026-10-22 at Pranav's direction (PRD §10); a viva guide in `docs/viva_guide.md`.
 - **Extra:** a local browser UI for playing the agent (`python -m web.server`); it is not part of the graded core.
-- **Left for the team:** report and slide prose, the `[OWNER]` notes, the AI declaration, Shalom's and Vishal's reviews (prompts 2b and 3b in `docs/prompts.md`), and viva practice.
+- **Left for the team:** the `[CHECK]` items in the report (references, contributions, the declaration's final sentence), reviewing the `[DRAFT]` paragraphs in the implementation notes, Shalom's and Vishal's code reviews (prompts 2b and 3b in `docs/prompts.md`), building the slide deck, and viva practice.
 
 `search.py` and `evaluation.py` were written by Claude Code at Pranav's direction (see `docs/PRD.md` §10); Shalom and Vishal own and review them.
 
@@ -79,7 +79,8 @@ Click a point to place a goat, or click a piece and then its destination. The pa
 ## Results and report
 
 - `results/`: E1 and E2 raw CSVs, summaries, `tables.md` and the three plots (`python -m experiments report` rebuilds them from the CSVs).
-- `docs/report/report.md`: report skeleton (PRD §9) with tables filled in; prose marked [TEAM] is written by the team.
+- `docs/report/report.md`: the report (PRD §9); `docs/report/report.pdf` is the rendered version with the implementation notes and figures included.
 - `docs/report/tables_appendix.md`: per-position and outcome tables; rebuild with `python tools/report_tables.py`.
-- `docs/report/slides.md`: 6-slide outline.
-- `docs/implementation_notes.md`: draft of report §4.
+- `docs/report/slides.md`: 6-slide outline with talking points.
+- `docs/implementation_notes.md`: report §4.
+- `docs/viva_guide.md`: answers to the viva topics in `docs/prompts.md` Phase 6.
