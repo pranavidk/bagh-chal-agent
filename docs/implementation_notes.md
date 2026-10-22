@@ -1,6 +1,6 @@
 # 4. Implementation notes (draft)
 
-> **Draft status.** Drafted by Claude Code from the code on 2026-10-13. It describes what the code does. Places marked **[OWNER: …]** need the owner's own reasoning in their own words; delete each marker once it's filled. Per PRD §10, Claude Code wrote `search.py` and `evaluation.py` at Pranav's direction. Shalom owns the search and Vishal owns the evaluation, and the report's declaration (§8) must say so.
+> **Draft status.** Drafted by Claude Code from the code on 2026-10-13. It describes what the code does. The five places that were marked **[OWNER: …]** now hold placeholder text written by Claude Code on 2026-10-22 and tagged **[DRAFT …]**. Each owner must check it and rewrite it in their own words, then delete the tag. Treat any tag still present as unfinished. Per PRD §10, Claude Code wrote `search.py` and `evaluation.py` at Pranav's direction. Shalom owns the search and Vishal owns the evaluation, and the report's declaration (§8) must say so.
 
 ## 4.1 State representation
 
@@ -16,7 +16,7 @@ Four more fields are bookkeeping and take no part in equality:
 
 Text boards (`"T...T/...../...../...../T...T"`) are parsed and validated only at the program's edges, by the CLI and when loading positions. The checks are: 4 tigers, goats on board + in hand + captured = 20, and legal characters and row lengths. Inside the search no state is ever re-validated.
 
-[OWNER: Shalom/Vishal: one or two sentences on why a tuple board and an immutable state suit minimax, in your own words.]
+**[DRAFT: placeholder written by Claude Code on 2026-10-22. Shalom/Vishal: check it, rewrite it in your own words, then delete this tag.]** Minimax explores many alternative futures from the same position, so each child must be a separate position that can't disturb its parent or siblings. With an immutable state, `apply` makes a fresh child and the search never has to undo a move. A tuple is also hashable, so the same value can serve as a repetition key (R8.4) and be compared cheaply.
 
 ## 4.2 Board topology generated from the rule
 
@@ -83,7 +83,7 @@ Both are tests, and `python -m experiments check-engine` checks the first again 
 
 Alpha-beta passes the bounds `alpha` (the best MAX can already guarantee on this path) and `beta` (the best for MIN) down the tree, and stops searching a node's children once `alpha ≥ beta`. The root call uses `(−∞, +∞)`.
 
-[OWNER: Shalom: explain in your own words why the pruned children can't change the root value, using the Fig. 5.2 trace (where alpha becomes 3, and why node C is cut).]
+**[DRAFT: placeholder written by Claude Code on 2026-10-22. Shalom: check it, rewrite it in your own words, then delete this tag.]** In Fig. 5.2 the root A is MAX and B, C, D are MIN nodes. B's leaves 3, 12, 8 give B = 3, so after B the root is guaranteed at least 3 and alpha becomes 3. C's first leaf is 2. Because C is a MIN node, its value can only be 2 or lower, whatever its other two leaves are. MAX already has 3, so it will never choose C, and the remaining leaves (4 and 6) can't affect the root: alpha (3) ≥ C's bound (2), so C is cut. D is searched in full (14, 5, 2 → 2), and the root is max(3, ≤2, 2) = 3, the same as minimax. Only those two leaves are skipped: 11 nodes instead of 13.
 
 ## 4.6 Tie-breaking
 
@@ -91,7 +91,7 @@ At every node the search keeps the **first** move that reaches the best value. I
 
 Alpha-beta is guaranteed to return the same *value* as minimax at the root, but not always the same *move*. When moves tie, a pruned subtree can return a bound equal to the best value without being searched in full, and the strict comparison then keeps an earlier move. E1 therefore compares root scores, not moves. They matched on all 90 position/depth pairs.
 
-[OWNER: Shalom: add the example you'd give at the viva.]
+**[DRAFT: placeholder written by Claude Code on 2026-10-22. Shalom: check it, rewrite it in your own words, then delete this tag.]** Example (`test_r11_first_best_move_kept_on_ties`): the root is MAX with three MIN children whose leaves are [5, 7], [6, 5] and [5, 9], so every child is worth 5. Minimax sees child 0 = 5 first. Children 1 and 2 also score 5, but 5 > 5 is false, so it keeps move 0. Alpha-beta gives the same answer: after child 0, alpha = 5. Child 2's first leaf is 5 ≤ alpha, so it is cut before the 9 is seen; its bound of 5 doesn't beat 5 either. Both return move 0 with score 5. If the comparison were `≥`, the last tied move would win instead, and minimax and alpha-beta could pick different moves, because a pruned child can return a bound equal to the best value.
 
 ## 4.7 Evaluation function
 
@@ -108,7 +108,7 @@ The evaluation is a single tiger-side score:
 
 Its magnitude is at most 896 for tigers and 344 for goats, far inside the ±100,000 bound. The bound is also tested on 500 random reachable states. A call takes about 2 µs. The baseline evaluator for E2 is `capt` alone.
 
-[OWNER: Vishal: justify each weight in your own words (the code has a one-line reason per weight), say whether you kept or changed them, and explain why one zero-sum score built from tiger features minus goat features keeps alpha-beta sound.]
+**[DRAFT: placeholder written by Claude Code on 2026-10-22. Vishal: check it, rewrite it in your own words, then delete this tag.]** The initial weights were kept. `capt` (100) is the largest because a capture is permanent and five end the game, so one capture must outweigh any realistic positional swing. `trapped` (40) is next: four trapped tigers win for the goats, but a tiger can be freed, so it counts for less than a capture. `threat` (15) is about a seventh of a capture: an attackable goat is often lost, but it can still be defended. `mob` (3), `conn` (2) and `hub` (1) are small positional terms. They have many units each (mobility up to about 30, 56 edges, hub up to 72), and `hub` is smallest because it overlaps with `conn`. The score is a single number: tigers maximise it and goats minimise it, so one player's gain is exactly the other's loss. That is the zero-sum assumption that minimax and alpha-beta rely on. If each side used its own evaluation, the bounds alpha and beta would refer to different scales and pruning could discard the true best line.
 
 ## 4.8 How the test positions were generated
 
@@ -123,4 +123,4 @@ Pure random play isn't used because random goats are captured long before placem
 
 Each position starts with an empty repetition history and ply 0. This is a known simplification.
 
-[OWNER: Pranav: note any caveat you want the reader to know about the suite, e.g. that the positions come from the designed evaluation's own play.]
+**[DRAFT: placeholder written by Claude Code on 2026-10-22. Pranav: check it, rewrite it in your own words, then delete this tag.]** Caveat: 70% of the moves that produced the positions were chosen by the designed evaluation itself, so the suite leans toward positions that evaluation tends to reach. This doesn't bias E1, where both algorithms search the same positions and must return the same value. It does mean the positions aren't a uniform sample of all reachable states. The empty repetition history also means no test position is close to a repetition draw.

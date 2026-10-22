@@ -164,7 +164,7 @@ All 11 draws were threefold repetitions; no game reached the 200-ply cap. Mean g
 - Review 1: Claude was used for scoping and the proposal.
 - Claude Code (Anthropic) built the game rules (`board.py`, `state.py`, `rules.py`, `game.py`), all tests, the adapter, the CLI, the benchmarks and the experiment harness.
 - On 2026-10-13, at Pranav's direction while Shalom and Vishal were unavailable, Claude Code also wrote `search.py` (minimax, alpha-beta, choose_move) and `evaluation.py` (features, evaluation functions and initial weights). Shalom and Vishal then reviewed and own them. This supersedes the Review 1 statement that Claude wrote no part of the search or evaluation.
-- Claude Code drafted the implementation notes (§4) and the tables in this report. The analysis, conclusions and the rest of the prose are the team's.
+- Claude Code drafted the implementation notes (§4) and the tables in this report. On 2026-10-22 it also wrote placeholder text for the [OWNER] markers in §4, tagged [DRAFT], for the owners to rewrite. The analysis, conclusions and the rest of the prose are the team's.
 - Edit this list if any of it changes, e.g. if a team member rewrites search.py or the weights, or if Claude Code drafts more of the report.]
 
 ---
