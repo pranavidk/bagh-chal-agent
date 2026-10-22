@@ -37,7 +37,7 @@ The number of plies (single moves by one player) searched below the root. Depth 
 
 ## 6. Read the nodes-vs-depth plot (Figure 1)
 
-The y-axis is logarithmic, so a straight line means exponential growth, and its slope is the effective branching factor b\*. Minimax's slope is about 14–15 in placement and about 8 in movement. Alpha-beta's slope is lower (about 6.9 and 5.1 at depth 4), and the gap widens with depth: 54% → 35% → 14% of minimax's nodes overall. The ideal with perfect ordering is √b (≈ 3.8 and 2.8). We're above it because moves are searched in fixed rule order.
+The y-axis is logarithmic, so a straight line means exponential growth, and its slope is the effective branching factor b\*. Minimax's slope is about 14–15 in placement and about 8 in movement. Alpha-beta's slope is lower (about 6.9 and 5.1 at depth 4), and the gap widens with depth: 54% → 35% → 14% of minimax's nodes overall. The ideal with perfect ordering is √b (≈ 3.8 and 2.8). We're above it because moves are searched in fixed rule order. E3 (Figure 4) shows this directly: with the best moves first, the same code drops to b\* ≈ 4.8 and 3.4.
 
 ## 7. Why does placement save more than movement?
 
@@ -66,6 +66,29 @@ As tiger, threat and mobility build double attacks that a capture-only goat can'
 - **How are nodes counted?** `stats.nodes += 1` is the first line of every call, so depth 1 = 1 + number of moves.
 - **Why an immutable state?** Children never disturb parents; no undo step; the board doubles as a repetition key.
 - **What is a draw?** Threefold repetition or 200 plies (R8). All 11 E2 draws were repetitions.
+
+## 11. What are alpha-beta's best case and worst case? (E3)
+
+- **Best case:** the best move is searched first at every node, giving O(b^(d/2)), exactly b^⌈d/2⌉ + b^⌊d/2⌋ − 1 leaves on a uniform tree (Knuth–Moore). The effective branching factor becomes √b, so the same work searches about twice as deep.
+- **Worst case:** the worst move is searched first at every node, giving O(b^d), the same as minimax, because the bound improves with every move and `alpha ≥ beta` never fires.
+- **How we showed it:** `baghchal/ordering.py` wraps the game and returns the same legal moves in a different order. `search.py` is untouched. Best and worst order sort by each child's exact value, from a separate, uncounted search. On uniform trees the counts match the formulas exactly (Table 5, `tests/test_ordering.py`). On Bagh-Chal at depth 4, alpha-beta needs 86% of minimax's nodes in worst order, 14% in rule order, 4.8% in heuristic order and 2.5% in best order (Table 4).
+- **Why reversed order isn't always exactly b^d on Bagh-Chal:** a node's cutoff also uses bounds from its ancestors' earlier siblings, and real trees have ties and terminals. The constructed tree (`UniformTree.worst_case`) reaches exactly b^d.
+
+## 12. Does move order change minimax?
+
+No. Minimax visits every node whatever the order: the tests check that its count is identical under all four orders. Order changes only *which* of several equally good moves it returns (R11).
+
+## 13. Which algorithm is better when?
+
+Alpha-beta never searches more nodes and always gives the same value. It wins most with deep searches, many moves per position (placement) and good ordering. The two tie at depth 1 and in the worst order. Minimax is better only if you need the exact value of every root move, because alpha-beta has only a bound for pruned moves, or for the simplest reference code. Full table: `docs/algorithm_comparison.md` §3.
+
+## 14. Is the oracle ordering a better agent? Why not play with it?
+
+No. To order the moves it has to search them first, so it costs more than the search it saves. It is a measuring device that shows the floor. The practical version is the heuristic order: 4.8% of minimax's nodes. At depth 4 it isn't yet faster (12.0 vs 7.3 ms in placement), because it evaluates every child to sort them.
+
+## 15. Where is the AI? Is there any ML?
+
+AI: a rational agent doing adversarial search (minimax and alpha-beta), with a depth cutoff and a hand-designed heuristic evaluation (domain knowledge in six features). No ML: nothing is trained or learned from data, the weights were set by reasoning, and the agent never changes from game to game. ML could tune the weights (self-play, TD-learning) or replace `EVAL` with a learned network, and the search would stay the same. Claude Code is a development tool we declared, not part of the agent. See `docs/ai_ml_usage.md`.
 
 ## Be honest about authorship
 

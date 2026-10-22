@@ -13,6 +13,7 @@ A Bagh-Chal (tigers and goats) game-playing agent using Minimax with Alpha-Beta 
 - **Done:** rules, search, evaluation, adapter and CLI are built and tested (`python -m pytest -q`); `python -m experiments check-engine --engine baghchal.adapter:Adapter` reports 0 failures.
 - **Done:** experiments E1 and E2 are run, with results, tables and plots committed in `results/`.
 - **Done:** report text, slides and implementation notes in `docs/report/` and `docs/`, written by Claude Code on 2026-10-22 at Pranav's direction (PRD §10); a viva guide in `docs/viva_guide.md`.
+- **Done:** experiment E3 (alpha-beta best/worst case under move ordering) with plots, the minimax vs alpha-beta comparison (`docs/algorithm_comparison.md`) and the AI/ML explanation (`docs/ai_ml_usage.md`), written by Claude Code on 2026-10-22 at Pranav's direction (PRD §10).
 - **Extra:** a local browser UI for playing the agent (`python -m web.server`); it is not part of the graded core.
 - **Left for the team:** the `[CHECK]` items in the report (references, contributions, the declaration's final sentence), reviewing the `[DRAFT]` paragraphs in the implementation notes, Shalom's and Vishal's code reviews (prompts 2b and 3b in `docs/prompts.md`), building the slide deck, and viva practice.
 
@@ -59,6 +60,14 @@ python -m baghchal selfplay --depth 3 [--tiger-eval designed --goat-eval baselin
 
 Experiment commands (`check-engine`, `generate`, `e1`, `e2`, `report`) are in `docs/experiments.md`; the engine spec is `baghchal.adapter:Adapter`.
 
+Experiment E3, alpha-beta's best and worst case (the search is unchanged; `baghchal/ordering.py` only reorders moves):
+
+```bash
+python -m e3                               # 30 positions at depths 2-4 + uniform trees, ~15 s; writes results/e3_*
+python -m e3 --depths 2,3 --only P01 M04   # quick trial
+python -m e3 --report                      # rebuild e3 summary, tables and plots from the CSVs
+```
+
 Benchmarks (not part of the test suite):
 
 ```bash
@@ -79,8 +88,11 @@ Click a point to place a goat, or click a piece and then its destination. The pa
 ## Results and report
 
 - `results/`: E1 and E2 raw CSVs, summaries, `tables.md` and the three plots (`python -m experiments report` rebuilds them from the CSVs).
+- `results/e3_*`: E3 raw CSVs, summary, `e3_tables.md` and three plots: `e3_ordering_nodes.png` (best vs worst case), `e3_ratio_d4.png`, `e3_trees.png`.
+- `docs/algorithm_comparison.md`: minimax vs alpha-beta, best and worst case, and which algorithm does better when.
+- `docs/ai_ml_usage.md`: how AI is used in the agent, why there is no ML, and where ML could fit.
 - `docs/report/report.md`: the report (PRD §9); `docs/report/report.pdf` is the rendered version with the implementation notes and figures included.
 - `docs/report/tables_appendix.md`: per-position and outcome tables; rebuild with `python tools/report_tables.py`.
-- `docs/report/slides.md`: 6-slide outline with talking points.
+- `docs/report/slides.md`: 7-slide outline with talking points.
 - `docs/implementation_notes.md`: report §4.
 - `docs/viva_guide.md`: answers to the viva topics in `docs/prompts.md` Phase 6.
