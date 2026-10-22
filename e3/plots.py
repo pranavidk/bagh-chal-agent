@@ -110,7 +110,7 @@ def plot_ratio(summary: Sequence[dict], depth: int, path) -> Path:
     ax.set_xticks([0, 25, 50, 75, 100])
     ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:.0f}%"))
     ax.axvline(100, color=GREY, linestyle="--", linewidth=1)
-    ax.text(101, len(order) - 0.45, "minimax = 100%", ha="left", va="center", fontsize=8,
+    ax.text(101, -0.55, "minimax = 100%", ha="left", va="center", fontsize=8,
             color=INK_MUTED)
     ax.set_xlabel("Alpha-beta nodes as % of minimax's (median over positions)",
                   color=INK_MUTED, fontsize=9)

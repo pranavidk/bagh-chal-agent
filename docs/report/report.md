@@ -183,11 +183,12 @@ The program is plain Python 3 with no third-party libraries in the engine. A pos
 
 | Check | Result |
 |---|---|
-| Unit and acceptance tests (`python -m pytest -q`) | 225 passed |
+| Unit and acceptance tests (`python -m pytest -q`) | 301 passed |
 | Topology (R1/R2) | 56 edges, 13 even points, degree histogram {3:12, 4:4, 5:4, 8:5}, 80 jumps |
 | Perft from the start, depths 1–4 | 21 · 252 · 5,052 · 68,204 |
 | Textbook tree (R&N Fig. 5.2) | value 3; minimax 13 nodes; alpha-beta 11 nodes |
 | Engine contract (`python -m experiments check-engine`) | 0 failures |
+| Move ordering (E3, `tests/test_ordering.py`) | best order = Knuth–Moore leaf count and worst-case tree = b^d, exactly, for b ∈ {2,3,4}, d ∈ {2..5}; minimax count order-independent |
 | Rules speed (`benchmarks/bench_rules.py`, Python 3.15, Apple silicon) | ~1.04 M `legal_moves`/s; ~1.29 M `apply`/s |
 | Evaluation speed | ~1.8 µs per `designed_eval` call |
 
