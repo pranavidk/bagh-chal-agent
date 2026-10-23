@@ -12,6 +12,10 @@ Endpoints (JSON):
     GET  /api/topology   points with row, col, degree; the R1 edge list
     POST /api/state      {start?, moves} -> position, legal moves, result
     POST /api/search     {start?, moves, depth, algorithm, eval} -> move, score, nodes, ms, pv
+    POST /api/compare    {start?, moves, depth, eval} -> minimax and alpha-beta in four move
+                         orders on this position (E3 live): nodes, ms, score, move, b*
+    GET  /api/results    the committed E1 and E3 summaries and uniform-tree counts (results/*.csv)
+    GET  /results/<chart>.png   the E1/E3 figures, from a fixed list
 """
 from __future__ import annotations
 
@@ -24,13 +28,22 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from baghchal import rules
-from baghchal.adapter import Adapter
+from baghchal.adapter import Adapter, evaluator_for
 from baghchal.board import DEGREE, EDGES, EVEN, GOAT, POINTS, TIGER, to_rc
+from baghchal.game import BaghChalGame
+from baghchal.ordering import ORDERINGS, ordered_search
 from baghchal.state import NUM_GOATS, BoardFormatError, State, initial_state, make_state, parse_board, parse_side
+from experiments.analysis import effective_branching_factor, read_csv
 from experiments.engine_api import ALGORITHMS, ALPHABETA, BASELINE, DESIGNED, MINIMAX, SearchStats
 
 STATIC = Path(__file__).resolve().parent / "static"
+RESULTS = Path(__file__).resolve().parent.parent / "results"
 MAX_DEPTH = {ALPHABETA: 6, MINIMAX: 5}
+# Compare runs minimax and the oracle orders too; depth 4 keeps the worst case under ~2 s.
+MAX_COMPARE_DEPTH = 4
+CHARTS = ("e1_nodes_vs_depth.png", "e1_time_vs_depth.png", "e3_ordering_nodes.png",
+          "e3_ratio_d4.png", "e3_trees.png")
+GAME = BaghChalGame()
 SIDE = {GOAT: "GOAT", TIGER: "TIGER"}
 KIND = {rules.K_PLACE: "place", rules.K_GOAT_STEP: "step", rules.K_TIGER_STEP: "step",
         rules.K_JUMP: "jump"}
@@ -160,7 +173,70 @@ def api_search(payload: dict) -> dict:
     }
 
 
-ROUTES = {"/api/state": api_state, "/api/search": api_search}
+def api_compare(payload: dict) -> dict:
+    """E3 on one position: minimax, then alpha-beta in worst, R10, heuristic and best order.
+
+    Uses baghchal.ordering, so the search code is the agent's own; only the order
+    of legal moves differs. Time for the worst and best orders includes the
+    oracle's own (uncounted) searches, so only their node counts are meaningful.
+    """
+    state = replay(payload)
+    if rules.is_terminal(state):
+        raise ApiError("The game is over; there is nothing to compare.")
+    evaluator = payload.get("eval", DESIGNED)
+    if evaluator not in (DESIGNED, BASELINE):
+        raise ApiError("eval must be designed or baseline.")
+    try:
+        depth = int(payload.get("depth", 3))
+    except (TypeError, ValueError):
+        raise ApiError("depth must be a whole number.") from None
+    if not 1 <= depth <= MAX_COMPARE_DEPTH:
+        raise ApiError(f"depth for a comparison must be between 1 and {MAX_COMPARE_DEPTH}.")
+    evaluate = evaluator_for(evaluator)
+    runs = [("minimax", MINIMAX, "natural")] + [(f"ab_{o}", ALPHABETA, o) for o in ORDERINGS]
+    rows = []
+    for config, algorithm, order in runs:
+        stats = SearchStats()
+        t0 = time.perf_counter()
+        result = ordered_search(GAME, state, depth, algorithm, order, evaluate, stats)
+        rows.append({"config": config, "algorithm": algorithm, "order": order,
+                     "nodes": stats.nodes, "evals": stats.evals,
+                     "time_ms": round((time.perf_counter() - t0) * 1000, 2),
+                     "oracle": order in ("best", "worst"),
+                     "score": result.score, "move": str(result.move),
+                     "ebf": round(effective_branching_factor(stats.nodes, depth), 2)})
+    return {"rows": rows, "depth": depth, "eval": evaluator, "side": SIDE[state.to_move],
+            "branching": len(rules.legal_moves(state)),
+            "same_score": len({r["score"] for r in rows}) == 1}
+
+
+def _numbers(row: dict) -> dict:
+    """CSV strings -> ints and floats where they parse."""
+    out = {}
+    for key, value in row.items():
+        try:
+            number = float(value)
+            out[key] = int(number) if number.is_integer() and "." not in value else number
+        except (TypeError, ValueError):
+            out[key] = value
+    return out
+
+
+def api_results() -> dict:
+    """The committed experiment summaries, for the results view."""
+    def load(name):
+        path = RESULTS / name
+        return [_numbers(r) for r in read_csv(path)] if path.exists() else []
+    e3 = load("e3_summary.csv")
+    for row in e3:   # nodes_median can be x.5 (even count); keep it a number either way
+        row["nodes_median"] = float(row["nodes_median"])
+        if row["nodes_median"].is_integer():
+            row["nodes_median"] = int(row["nodes_median"])
+    return {"e1": load("e1_summary.csv"), "e3": e3, "trees": load("e3_trees.csv"),
+            "charts": [c for c in CHARTS if (RESULTS / c).exists()]}
+
+
+ROUTES = {"/api/state": api_state, "/api/search": api_search, "/api/compare": api_compare}
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -186,7 +262,22 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/api/topology":
             return self._json(HTTPStatus.OK, topology_json())
+        if self.path == "/api/results":
+            return self._json(HTTPStatus.OK, api_results())
+        if self.path.startswith("/results/"):
+            return self._chart(self.path[len("/results/"):])
         return super().do_GET()
+
+    def _chart(self, name):
+        """Serve one of the fixed CHARTS from results/; anything else is a 404."""
+        if name not in CHARTS or not (RESULTS / name).exists():
+            return self._json(HTTPStatus.NOT_FOUND, {"error": f"No chart {name}."})
+        data = (RESULTS / name).read_bytes()
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "image/png")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
 
     def do_POST(self):
         route = ROUTES.get(self.path)

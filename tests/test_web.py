@@ -10,7 +10,8 @@ import pytest
 
 from baghchal import rules
 from baghchal.state import initial_state
-from web.server import ApiError, api_search, api_state, make_server, topology_json
+from web.server import (ApiError, api_compare, api_results, api_search, api_state, make_server,
+                        topology_json)
 
 TIGER_ORDER = {"board": "TG.../GG.../..TG./...../T...T", "to_move": "TIGER", "in_hand": 12, "captured": 4}
 
@@ -111,6 +112,78 @@ def test_http_round_trip():
         assert info.value.code == 400 and "not legal" in json.load(info.value)["error"]
         with urllib.request.urlopen(base + "/") as r:
             assert b"<div id=\"root\">" in r.read()
+    finally:
+        server.shutdown()
+        server.server_close()
+
+
+# --- comparison view (E3 in the browser) ------------------------------------------
+
+def test_compare_runs_every_configuration_on_the_current_position():
+    """Minimax and alpha-beta in four move orders, all on the replayed position."""
+    r = api_compare({"moves": ["G@12"], "depth": 3})
+    configs = [row["config"] for row in r["rows"]]
+    assert configs == ["minimax", "ab_worst", "ab_natural", "ab_heuristic", "ab_best"]
+    assert r["side"] == "TIGER" and r["depth"] == 3 and r["branching"] == 12   # R3: 12 tiger steps
+    assert r["same_score"] and len({row["score"] for row in r["rows"]}) == 1
+
+
+def test_compare_counts_match_the_plain_engine():
+    """minimax and R10-order alpha-beta rows report exactly what /api/search reports."""
+    r = {row["config"]: row for row in api_compare({"moves": ["G@12"], "depth": 3})["rows"]}
+    for algorithm, config in (("minimax", "minimax"), ("alphabeta", "ab_natural")):
+        plain = api_search({"moves": ["G@12"], "depth": 3, "algorithm": algorithm})
+        assert r[config]["nodes"] == plain["nodes"] and r[config]["score"] == plain["score"]
+    assert r["ab_best"]["nodes"] <= r["ab_natural"]["nodes"] <= r["ab_worst"]["nodes"] <= r["minimax"]["nodes"]
+
+
+def test_compare_depth_one_is_a_tie():
+    """Depth 1: nothing can be pruned, so every configuration expands 1 + moves nodes."""
+    r = api_compare({"moves": [], "depth": 1})
+    assert {row["nodes"] for row in r["rows"]} == {1 + 21}
+
+
+@pytest.mark.parametrize("payload,message", [
+    ({"moves": [], "depth": 0}, "between 1 and 4"),
+    ({"moves": [], "depth": 5}, "between 1 and 4"),
+    ({"moves": [], "eval": "fancy"}, "eval"),
+    ({"start": TIGER_ORDER, "moves": ["T 0x1>2"]}, "game is over"),
+])
+def test_compare_rejects_bad_requests(payload, message):
+    with pytest.raises(ApiError, match=message):
+        api_compare(payload)
+
+
+def test_results_reports_the_committed_experiments():
+    """The results view reads results/*.csv: E1 and E3 summaries, uniform trees, chart names."""
+    r = api_results()
+    e3 = {(row["phase"], row["depth"], row["config"]): row for row in r["e3"]}
+    assert e3[("all", 4, "ab_natural")]["nodes_median"] == 1214
+    assert e3[("all", 4, "minimax")]["fraction_of_minimax_nodes"] == 1.0
+    assert any(row["algorithm"] == "alphabeta" for row in r["e1"])
+    tree = {(row["b"], row["d"], row["tree"], row["config"]): row for row in r["trees"]}
+    assert tree[(8, 4, "random", "ab_best")]["leaves"] == tree[(8, 4, "random", "ab_best")]["knuth_moore_leaves"] == 127
+    assert "e3_ordering_nodes.png" in r["charts"]
+
+
+def test_http_serves_compare_and_charts_but_not_other_files():
+    server = make_server(port=0)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    base = f"http://127.0.0.1:{server.server_address[1]}"
+    try:
+        req = urllib.request.Request(base + "/api/compare", data=json.dumps({"moves": [], "depth": 2}).encode(),
+                                     headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req) as r:
+            assert len(json.load(r)["rows"]) == 5
+        with urllib.request.urlopen(base + "/api/results") as r:
+            assert json.load(r)["e3"]
+        with urllib.request.urlopen(base + "/results/e3_ordering_nodes.png") as r:
+            assert r.headers["Content-Type"] == "image/png" and r.read(4) == b"\x89PNG"
+        for bad in ("/results/e3_raw.csv", "/results/../README.md", "/results/%2e%2e/README.md"):
+            with pytest.raises(urllib.error.HTTPError) as info:
+                urllib.request.urlopen(base + bad)
+            assert info.value.code == 404
     finally:
         server.shutdown()
         server.server_close()

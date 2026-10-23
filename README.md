@@ -83,7 +83,12 @@ A local web UI (not part of the graded core, which is CLI-only per the PRD) talk
 python -m web.server            # then open http://127.0.0.1:8765
 ```
 
-Click a point to place a goat, or click a piece and then its destination. The panel shows the agent's move, score, positions searched, time and expected line, and a command to re-check any position with `analyse`. The compiled bundle `web/static/app.js` is committed; to rebuild after editing `web/frontend/src/App.jsx`: `cd web/frontend && npm install && npm run build`.
+Click a point to place a goat, or click a piece and then its destination. The panel shows the agent's move, score, positions searched, time and expected line, and a command to re-check any position with `analyse`.
+
+**Minimax vs alpha-beta in the browser.**
+- *Minimax vs alpha-beta on this position* (side panel): runs minimax and alpha-beta in worst, rule, heuristic and best move order on the board as it is, at depth 1–4. It shows the positions each search covered as bars, a same-score check, and a verdict on which algorithm wins and why.
+- The *results* link opens a page with the E1 and E3 charts and tables (alpha-beta's best and worst case, the uniform-tree formulas), the which-wins-when table and a short note on AI vs ML.
+- Both use the same engine code (`baghchal/ordering.py`, `results/*.csv`). The compiled bundle `web/static/app.js` is committed; to rebuild after editing `web/frontend/src/App.jsx`: `cd web/frontend && npm install && npm run build`.
 
 ## Results and report
 

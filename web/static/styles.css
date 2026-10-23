@@ -232,3 +232,58 @@ textarea, input[type="number"], select {
 }
 textarea { letter-spacing: 0.3em; resize: vertical; }
 .load .primary { align-self: flex-start; }
+
+/* ---- minimax vs alpha-beta: live comparison and results ---- */
+.link { background: none; border: 0; padding: 0; margin-top: 12px; color: var(--flag-blue-soft); font: inherit; font-size: 0.9375rem; cursor: pointer; text-align: left; text-decoration: underline; text-underline-offset: 3px; }
+.link:hover { color: var(--text); }
+
+.compare { padding-top: 22px; border-top: 1px solid var(--juniper-line); }
+.compare h2, .results h2 { font-size: 1.0625rem; margin: 0 0 6px; }
+.compare-controls { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.compare-controls select { font: inherit; background: var(--juniper-deep); color: var(--text); border: 1.5px solid var(--juniper-line); border-radius: var(--radius); padding: 6px 10px; }
+.compare-meta { font-size: 0.875rem; color: var(--text-dim); margin: 16px 0 10px; }
+
+.bars { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.bar-head, .bar-foot { display: flex; justify-content: space-between; gap: 10px; }
+.bar-name { font-size: 0.9375rem; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
+.bar-name i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.bar-num { font-size: 0.9375rem; white-space: nowrap; }
+.bar-num em { font-style: normal; color: var(--text-dim); }
+.bar-track { height: 10px; margin: 5px 0 4px; background: var(--juniper-deep); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; }
+.bar-foot { font-size: 0.75rem; color: var(--text-dim); }
+.bar-foot span:last-child { white-space: nowrap; }
+.muted-time { opacity: 0.75; font-style: italic; }
+
+.winner { margin: 18px 0 10px; padding: 12px 14px; background: var(--juniper-deep); border-left: 3px solid #199e70; border-radius: 6px; font-weight: 500; }
+.verdict { margin: 0; font-size: 0.9375rem; }
+.verdict dt { font-weight: 600; margin-top: 10px; }
+.verdict dd { margin: 2px 0 0; color: var(--text-dim); }
+
+.results { max-width: 1040px; margin: 0 auto; padding: 32px 32px 64px; }
+.results-head h1 { font-family: var(--serif); font-weight: 400; font-size: 2.5rem; margin: 10px 0 0; }
+.results section { margin-top: 44px; }
+.results h2 { font-size: 1.375rem; margin-bottom: 12px; }
+.results p { max-width: 72ch; }
+.results code { font-size: 0.875em; background: var(--juniper-deep); padding: 1px 5px; border-radius: 4px; }
+.chart { margin: 20px 0; }
+.chart img { display: block; width: 100%; height: auto; border-radius: var(--radius); background: #fcfcfb; }
+.chart figcaption { font-size: 0.875rem; color: var(--text-dim); margin-top: 8px; }
+.table-wrap { overflow-x: auto; margin: 16px 0; }
+.results table { border-collapse: collapse; font-size: 0.875rem; min-width: 100%; }
+.results th, .results td { text-align: right; padding: 7px 10px; border-bottom: 1px solid var(--juniper-line); }
+.results th { color: var(--text-dim); font-weight: 500; }
+.results th:first-child, .results td:first-child { text-align: left; }
+.results td em { font-style: normal; color: var(--text-dim); }
+.results table.when td, .results table.when th { text-align: left; vertical-align: top; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 16px 0; }
+.card { background: var(--juniper-deep); border-radius: var(--radius); padding: 16px 18px; border-top: 3px solid #a9b8b2; }
+.card.worst { border-top-color: #d95926; }
+.card.best { border-top-color: #199e70; }
+.card h3 { margin: 0 0 6px; font-size: 1rem; }
+.card p { margin: 0; font-size: 0.9375rem; color: var(--text-dim); }
+@media (max-width: 760px) {
+  .results { padding: 20px 16px 48px; }
+  .cards { grid-template-columns: 1fr; }
+  .results-head h1 { font-size: 2rem; }
+}
