@@ -23,8 +23,9 @@ We answer two questions (PRD §1):
 
 - **(a)** How many nodes does alpha-beta pruning save over plain minimax, and how does the saving change with depth and phase?
 - **(b)** Does our six-feature evaluation function play better than a naive one that only counts captured goats?
+- **(c)** *(added for the final review)* What are alpha-beta's best case and worst case, how close does our agent come to each, and when is each algorithm the better choice?
 
-In short: at depth 4, alpha-beta expands 14% of minimax's nodes (8.4% in the placement phase) and returns the same root score in all 90 searches. The designed evaluation beats the baseline in 96% of games as tiger, but in only 32% as goat.
+In short: at depth 4, alpha-beta expands 14% of minimax's nodes (8.4% in the placement phase) and returns the same root score in all 90 searches. The designed evaluation beats the baseline in 96% of games as tiger, but in only 32% as goat. Move order alone moves alpha-beta between about 86% of minimax's nodes (worst order) and 2.5% (best order), and a cheap heuristic order reaches 4.8% (E3).
 
 ## 2. AI formulation
 
@@ -66,6 +67,14 @@ Bagh-Chal has regional variants (for example, whether captures are compulsory an
 **One evaluation keeps the game zero-sum.** The two sides make progress in different ways: tigers by capturing and threatening, goats by blocking and trapping. A natural idea is to give each side its own score. Then, however, one side's gain would no longer be exactly the other side's loss. The game would become general-sum, and the argument that lets alpha-beta skip moves would no longer hold.
 
 We instead combine both kinds of progress into **one number from the tiger's side**: tiger features are added and goat features are subtracted (§3.3). Tigers maximise this number and goats minimise it, so every point gained by one side is lost by the other. `alpha` and `beta` are then bounds on the same quantity, and pruning is sound. The evaluation is also bounded: `|EVAL| ≤ 896`, which is far below the smallest win or loss value, `1,000,000 − 200`. A position that is merely good can therefore never outrank a real win.
+
+### 2.3 AI and ML in this project
+
+The agent is a **rational agent built on classical AI**. Its environment is two-player, deterministic, fully observable and zero-sum, and its decisions come from **adversarial search**: minimax and alpha-beta, depth-limited, with a cutoff. A **hand-designed heuristic evaluation** (§3.3) scores positions at the cutoff. The six features and their weights encode our knowledge of the game.
+
+The project uses **no machine learning**. There is no training data, no learned parameter and no training loop. The weights were set by reasoning (§3.3), the agent plays identically every time, and E2's games only measure it; they never adjust it. This was deliberate: the course module is adversarial search, and PRD §2 and C1 exclude learned weights and external AI services from the agent.
+
+ML could be added later by learning the weights through self-play or TD-learning, or by replacing `EVAL` with a learned network. The search would stay the same. Separately, an AI *tool*, Claude Code, was used to write much of the code and this report; that is declared in §8. Full explanation: `docs/ai_ml_usage.md`.
 
 ## 3. Algorithm description
 
@@ -174,11 +183,12 @@ The program is plain Python 3 with no third-party libraries in the engine. A pos
 
 | Check | Result |
 |---|---|
-| Unit and acceptance tests (`python -m pytest -q`) | 225 passed |
+| Unit and acceptance tests (`python -m pytest -q`) | 301 passed |
 | Topology (R1/R2) | 56 edges, 13 even points, degree histogram {3:12, 4:4, 5:4, 8:5}, 80 jumps |
 | Perft from the start, depths 1–4 | 21 · 252 · 5,052 · 68,204 |
 | Textbook tree (R&N Fig. 5.2) | value 3; minimax 13 nodes; alpha-beta 11 nodes |
 | Engine contract (`python -m experiments check-engine`) | 0 failures |
+| Move ordering (E3, `tests/test_ordering.py`) | best order = Knuth–Moore leaf count and worst-case tree = b^d, exactly, for b ∈ {2,3,4}, d ∈ {2..5}; minimax count order-independent |
 | Rules speed (`benchmarks/bench_rules.py`, Python 3.15, Apple silicon) | ~1.04 M `legal_moves`/s; ~1.29 M `apply`/s |
 | Evaluation speed | ~1.8 µs per `designed_eval` call |
 
@@ -229,6 +239,47 @@ All 11 draws were threefold repetitions; no game reached the 200-ply cap. Mean g
 
 **Figure 3.** `results/e2_results.png`: win/draw/loss for the designed evaluation as tiger and as goat.
 
+### 5.3 E3: Alpha-beta's best case and worst case (move ordering)
+
+Setup: the search code is unchanged. `baghchal/ordering.py` wraps the game so that `legal_moves` returns the same moves in a different order, which is the only thing the search sees (§6.2 of the PRD). There are four orders:
+
+- **Worst:** exact child values, worst move for the side to move first.
+- **R10:** the fixed rule order, as in E1.
+- **Heuristic:** `designed_eval` of each child, best first.
+- **Best:** exact child values, best first.
+
+The exact values for best and worst order come from a separate alpha-beta search that is not counted, so these two orders measure the bounds rather than offering a practical agent. E3 runs the same 30 positions at depths 2–4 with the designed evaluation, and also uniform synthetic trees (b = 2, 4, 8) where the textbook formulas are exact. Run with `python -m e3` (about 15 s). Minimax's node count and the R10 alpha-beta count reproduce E1 exactly. Every alpha-beta run returned minimax's root score.
+
+**Table 4. Median nodes per move under each ordering** (in brackets: median share of minimax's nodes)
+
+| Phase | Depth | Minimax | AB worst | AB R10 | AB heuristic | AB best |
+|---|---:|---:|---:|---:|---:|---:|
+| Placement | 2 | 240 | 240 (100%) | 79 (37.8%) | 45 (23.5%) | 44 (18.7%) |
+| Placement | 3 | 3,055 | 3,017 (99.2%) | 671 (26.2%) | 280 (9.8%) | 246 (8.4%) |
+| Placement | 4 | 45,746 | 23,417 (86.1%) | 2,627 (8.4%) | 720 (2.3%) | 650 (1.5%) |
+| Movement | 2 | 68 | 68 (100%) | 46 (66.7%) | 25 (36.8%) | 25 (36.2%) |
+| Movement | 3 | 615 | 615 (99.9%) | 252 (47.3%) | 117 (21.4%) | 77 (15.3%) |
+| Movement | 4 | 4,536 | 4,353 (90.6%) | 818 (18.6%) | 280 (7.0%) | 190 (4.1%) |
+| All | 4 | 6,996 | 5,678 (86.2%) | 1,214 (14.1%) | 453 (4.8%) | 233 (2.5%) |
+
+Depth-4 effective branching factor b\*: placement 14.4 (minimax) → 12.1 / 6.9 / 4.9 / 4.8 (AB worst / R10 / heuristic / best), with √b ≈ 3.8. Movement 7.9 → 7.9 / 5.1 / 3.8 / 3.4, with √b ≈ 2.8.
+
+**Table 5. Uniform trees, b = 8: leaves evaluated**
+
+| | d = 2 | d = 3 | d = 4 | d = 5 |
+|---|---:|---:|---:|---:|
+| Minimax, b^d | 64 | 512 | 4,096 | 32,768 |
+| AB worst case (tree built so that each move beats the last) | 64 | 512 | 4,096 | 32,768 |
+| AB, random leaf values, R10 order | 34 | 279 | 1,107 | 4,317 |
+| AB best order | 15 | 71 | 127 | 575 |
+| Knuth–Moore formula b^⌈d/2⌉ + b^⌊d/2⌋ − 1 | 15 | 71 | 127 | 575 |
+
+The match is exact for every b and d tested (`results/e3_tables.md`), and the tests in `tests/test_ordering.py` enforce it.
+
+**Figure 4.** `results/e3_ordering_nodes.png`: median nodes against depth (log scale) for minimax and alpha-beta in worst, R10 and best order.
+**Figure 5.** `results/e3_ratio_d4.png`: alpha-beta's nodes as a share of minimax's at depth 4, for each ordering and phase.
+**Figure 6.** `results/e3_trees.png`: uniform trees, measured leaf counts against the b^d and Knuth–Moore formulas.
+
 ## 6. Analysis
 
 ### 6.1 E1: what alpha-beta saves, and why
@@ -239,7 +290,7 @@ All 11 draws were threefold repetitions; no game reached the 200-ply cap. Mean g
 
 **Placement saves more than movement at every depth** (8.4% vs 18.6% at depth 4). The phase changes the branching factor: minimax's b\* is about 14–15 in placement and about 8 in movement (Table 2). Once a node is refuted, all of its remaining siblings are skipped, and in placement there are more siblings to skip. A larger b therefore means a larger saving from every cutoff.
 
-**What didn't reach the ideal.** With perfect move ordering, alpha-beta's b\* would be about √b: roughly 3.8 in placement and 2.8 in movement. We measured 6.9 and 5.1 at depth 4. The reason is move order. We search moves in the fixed rule order R10 (ascending point number), which has nothing to do with which move is best. The refuting move is often found late, so many siblings are searched before the cutoff happens. This was a deliberate choice: E1 measures plain alpha-beta. Captures-first ordering (PRD §11.1) is the obvious next step and should move b\* toward √b.
+**What didn't reach the ideal.** With perfect move ordering, alpha-beta's b\* would be about √b: roughly 3.8 in placement and 2.8 in movement. We measured 6.9 and 5.1 at depth 4. The reason is move order. We search moves in the fixed rule order R10 (ascending point number), which has nothing to do with which move is best. The refuting move is often found late, so many siblings are searched before the cutoff happens. This was a deliberate choice: E1 measures plain alpha-beta. E3 (§5.3, §6.4) confirms that move order is the cause. With the best moves first, the same search drops to b\* 4.8 in placement and 3.4 in movement.
 
 ### 6.2 E2: the designed evaluation against the capture-only baseline
 
@@ -261,17 +312,40 @@ The designed goat still won 16 games, all by trapping (Table A4). The baseline t
 
 **Games were short and were usually decided during placement.** The placement phase lasts 39 plies (20 goat placements and 19 tiger replies). The median game was 40 plies with the designed evaluation as tiger and 36.5 as goat, and 55 of the 100 games were over within 40 plies. Goats are most vulnerable while placing, because each new goat is a new target and a solid wall doesn't exist yet. This is also the phase where alpha-beta saves the most (§6.1), which is fortunate: it is where the extra depth matters.
 
-### 6.4 Conclusions
+### 6.4 E3: best case, worst case, and which algorithm wins when
+
+**Minimax has no best or worst case. Alpha-beta's depends entirely on move order.** Minimax expands every node whatever the order: its count was identical under all four orders, and the tests check this. Alpha-beta's count at depth 4 ranged from 86% of minimax's nodes in worst order to 2.5% in best order (Table 4), on the same positions and with the same code. The reason is the cutoff test `alpha ≥ beta`. It fires as soon as one side has seen a move good enough to make the other side avoid this line. In best order, the very first move sets that bound, and each opponent alternative is refuted after one reply. In worst order, every new move is better than the previous one, so the bound never tightens in time to cut anything.
+
+**The uniform trees confirm the textbook exactly.**
+- In best order, alpha-beta evaluated exactly b^⌈d/2⌉ + b^⌊d/2⌋ − 1 leaves for every b and d tested (Table 5). That is about 2·b^(d/2), so the effective branching factor becomes √b, and the same work searches about twice as deep.
+- On a tree built so that each move is better than the one before it, alpha-beta evaluated all b^d leaves, the same as minimax.
+- Random leaf values in a fixed order fall in between.
+
+On Bagh-Chal, simply reversing the oracle order is not quite the worst possible order. It equals minimax on 23 of the 30 positions at depth 2, but at depth 4 a few cutoffs still fire from bounds set by an ancestor's earlier siblings, so it searches between 37% and 100% of minimax's nodes. This is still effectively no pruning. Placement saves more than movement under every order, for the reason given in §6.1.
+
+**A cheap ordering gets most of the way.** Sorting moves by the static evaluation of the child brings depth 4 to 4.8% of minimax's nodes overall (placement 2.3%), against 2.5% for the oracle and 14.1% for R10 order. At depth 4 this does not yet save time. Calling `designed_eval` on every child to sort them costs more than the nodes saved (placement: 12.0 ms vs 7.3 ms median for R10 order). Cheaper orderings, such as captures first, or deeper searches would change that.
+
+**Which algorithm does better, and when.**
+- **Alpha-beta never does worse in nodes, and it returns the same value.**
+- **Alpha-beta wins most** with deep searches (54% → 35% → 14% of minimax's nodes from depth 2 to 4), with many moves per position (placement saves twice as much as movement), and with good move ordering.
+- **They tie** at depth 1, where nothing can be cut, and in the worst order, where alpha-beta does minimax's work plus a few comparisons.
+- **Minimax is the better choice** only when the exact value of *every* root move is needed, for example to rank or explain all moves, since alpha-beta gives only a bound for moves it prunes, or when the simplest code matters, as for a reference implementation. We use minimax as the reference that alpha-beta is tested against.
+
+Full comparison: `docs/algorithm_comparison.md`.
+
+### 6.5 Conclusions
 
 1. **(a)** Alpha-beta is exact and its advantage grows with depth: at depth 4 it needs 14% of minimax's nodes overall and 8.4% in placement, with time saved in proportion. Without move ordering, it remains well short of the √b best case.
 2. **(b)** The designed evaluation is clearly better than counting captures. The difference is overwhelming for the tiger and real but smaller for the goat, whose defensive task needs more depth than 3 plies.
+3. **(c)** Alpha-beta's cost is set by move order. It ranges from about minimax's cost in the worst case (exactly b^d on a constructed tree) to exactly b^⌈d/2⌉ + b^⌊d/2⌋ − 1 leaves in the best case. A heuristic order reaches 4.8% of minimax's nodes at depth 4. Alpha-beta is never worse than minimax, and minimax is preferable only when every move's exact value is needed.
 
 ## 7. Limitations and what we'd do differently
 
 **Limitations**
 
 - **Shallow search.** Depth 3–4 cannot see the multi-move plans that decide many goat games (§6.2).
-- **No search enhancements.** There is no move ordering, transposition table, iterative deepening or quiescence search; these were deliberate non-goals (PRD §2). As a result, alpha-beta's b\* stays well above √b, and tactical positions can be cut off in the middle of a capture sequence (the horizon effect).
+- **No search enhancements in the agent.** The agent plays with R10 order and no transposition table, iterative deepening or quiescence search; these were deliberate non-goals (PRD §2). As a result, alpha-beta's b\* stays well above √b, and tactical positions can be cut off in the middle of a capture sequence (the horizon effect). E3 measures move ordering but does not switch the agent to it.
+- **E3's bounds are empirical on Bagh-Chal.** The best and worst orders use an oracle, so they bound what ordering can achieve rather than describing a playable agent. On Bagh-Chal's irregular trees, the reversed oracle order is close to, but not exactly, the worst possible order (§6.4).
 - **Weights not tuned.** The weights were chosen by reasoning, not by experiment. We don't know how close to good they are.
 - **E2 is limited.** It plays against one weak opponent at one depth (3), with 50 games per side. The confidence intervals are wide (21–46% for the goat win rate). The result shows the designed evaluation beats counting captures, not that it plays well against strong opponents.
 - **Test positions are not a uniform sample.** About 70% of the moves that produced the E1 positions were chosen by the designed evaluation itself, so the suite leans toward positions it tends to reach. Every position also starts with an empty repetition history.
@@ -279,7 +353,7 @@ The designed goat still won 16 games, all by trapping (Table A4). The baseline t
 
 **What we would do differently**
 
-1. **Order moves before searching:** captures first, then moves that create threats. This is cheap and should move alpha-beta toward its best case, which matters most in the movement phase, where the saving is smallest.
+1. **Order moves before searching.** E3 shows that a heuristic order cuts depth-4 nodes from 14.1% to 4.8% of minimax's. A cheaper key (captures first, then moves that create threats) should keep that saving without the cost of evaluating every child, so it would also save time.
 2. **Tune the weights** with a short round-robin over 3–4 candidate weight sets (PRD §11.2), especially to strengthen the goat side.
 3. **Use iterative deepening with a time limit,** so the agent searches as deep as the clock allows rather than to a fixed depth. The goat side would gain most.
 4. **Run E2 at several depths,** and also against the designed evaluation itself, to see whether the tiger/goat asymmetry shrinks with depth.
@@ -298,6 +372,7 @@ We used Claude (Anthropic) during scoping and to help write the Review 1 proposa
 - **Code.** Claude Code (Anthropic's coding agent) wrote the game rules (`board.py`, `state.py`, `rules.py`, `game.py`), the tests, the adapter, the command-line interface, the benchmarks and the experiment harness.
 - **Search and evaluation.** On 2026-10-13, at Pranav's direction while Shalom and Vishal were unavailable, Claude Code also wrote `search.py` (minimax, alpha-beta and move choice) and `evaluation.py` (the six features, both evaluation functions and the weights). This supersedes our Review 1 statement that Claude wrote no part of the search or evaluation. Shalom is responsible for the search and Vishal for the evaluation. **[CHECK: add whether either of them reviewed or changed the code, and when.]**
 - **Report.** On 2026-10-22, at Pranav's direction, Claude Code wrote the text of this report, including the analysis and conclusions (§6), the implementation notes (§4), the tables and the slide text.
+- **Experiment E3 and the comparison.** Later on 2026-10-22, at Pranav's direction and to meet the professor's request for a best-case/worst-case comparison, Claude Code wrote the move-ordering wrapper (`baghchal/ordering.py`), the E3 experiment (`e3/`) and its tests. It also wrote §2.3, §5.3 and §6.4 of this report, `docs/algorithm_comparison.md` and `docs/ai_ml_usage.md`. `search.py` and `evaluation.py` were not changed.
 - **What we did.** Pranav directed the work, chose the scope and the frozen rules recorded in the project specification, and wrote the experiment framework (`experiments/`). **[CHECK: add each member's own contributions; Claude helped with the specification during scoping, as declared above.]** Any further changes by team members are recorded in the project specification (`docs/PRD.md` §10) and the git history.
 
 All three of us have checked the results against the code and output, and each of us can explain the search, the evaluation and the experiments. **[CHECK: every member must confirm this sentence is true before submission.]**
@@ -305,5 +380,7 @@ All three of us have checked the results against the code and output, and each o
 ---
 
 ## Appendix
+
+E3 tables (all depths, b\* and uniform trees): `results/e3_tables.md`; the full minimax vs alpha-beta comparison: `docs/algorithm_comparison.md`.
 
 Per-position E1 tables, root agreement and E2 outcome breakdowns: `docs/report/tables_appendix.md` (regenerate with `python tools/report_tables.py`).

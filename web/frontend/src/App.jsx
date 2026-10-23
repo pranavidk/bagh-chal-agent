@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ComparePanel, ResultsPage } from "./Compare.jsx";
 
 // Board geometry: points 0-24, index = 5*row + col, drawn on a 600 x 600 slab.
 const STEP = 120;
@@ -284,6 +285,7 @@ export default function App() {
   const [notice, setNotice] = useState(null);
   const [showNumbers, setShowNumbers] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [view, setView] = useState("play");
 
   const gameRef = useRef(game);
   const configRef = useRef(config);
@@ -444,6 +446,9 @@ export default function App() {
     }
   };
 
+  const showView = (v) => { setView(v); window.scrollTo(0, 0); };
+  if (view === "results") return <ResultsPage onBack={() => showView("play")} />;
+
   return (
     <div className="app">
       <main className="stage">
@@ -460,6 +465,7 @@ export default function App() {
         <header>
           <h1>Bagh-Chal</h1>
           <p className="subtitle">Four tigers, twenty goats. Play against the minimax agent.</p>
+          <button type="button" className="link" onClick={() => showView("results")}>Minimax vs alpha-beta: results, best and worst case →</button>
         </header>
 
         <section className="status" aria-live="polite">
@@ -519,6 +525,9 @@ export default function App() {
 
         <SearchReport search={hint} title="Suggested move for you" />
         <SearchReport search={lastSearch} title="The agent's last move" />
+
+        <ComparePanel game={game} pos={current ? pos : null} defaultDepth={config.depth}
+                      evaluation={config.eval} onShowResults={() => showView("results")} />
 
         <section className="log">
           <h2>Moves</h2>

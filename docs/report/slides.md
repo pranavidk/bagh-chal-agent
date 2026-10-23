@@ -1,6 +1,6 @@
-# Slides: 6-slide outline
+# Slides: 7-slide outline
 
-> Content, figures and numbers come from `results/` and the report. Claude Code wrote the talking points on 2026-10-22 at Pranav's direction (declared on slide 6 and in report §8). Build in PowerPoint or Keynote; one idea per slide.
+> Content, figures and numbers come from `results/` and the report. Claude Code wrote the talking points on 2026-10-22 at Pranav's direction (declared on slide 7 and in report §8). Build in PowerPoint or Keynote; one idea per slide.
 
 ## 1. The problem
 - Bagh-Chal: 4 tigers vs 20 goats, 5×5 board, diagonals only through even points.
@@ -28,13 +28,20 @@
 - Same root score and same move on all 90 position/depth pairs.
 - Talking point: on a log scale the slope is the effective branching factor b\*. Alpha-beta's slope is lower and the gap grows with depth: 54% → 35% → 14% of minimax's nodes. Placement has more moves per position (b\* ≈ 14 vs 8), so every cutoff skips more siblings. We are still above the √b ideal because moves are searched in fixed rule order, not best-first.
 
-## 5. E2: designed vs baseline evaluation
+## 5. E3: best case vs worst case, and which algorithm wins when
+- Visual: `results/e3_ordering_nodes.png` (backup: `results/e3_ratio_d4.png`, `results/e3_trees.png`).
+- Same positions, same code, only the move order changes (`baghchal/ordering.py`). Depth 4, share of minimax's nodes: worst order 86% · R10 order 14% · heuristic order 4.8% · best order 2.5%.
+- Uniform trees: best order evaluates exactly b^⌈d/2⌉ + b^⌊d/2⌋ − 1 leaves; a tree built so each move beats the last forces all b^d.
+- Talking point: minimax has no best or worst case; it always visits every node. Alpha-beta's cost is set by move order: from minimax's cost (worst) to about b^(d/2) (best), i.e. twice the depth for the same work. It never does worse than minimax and always gives the same value. Minimax is only preferable when you need the exact value of every move, or the simplest code.
+- Talking point (AI vs ML): the agent is classical AI (adversarial search plus a hand-designed evaluation). Nothing is learned; ML could later tune the weights or replace the evaluation (`docs/ai_ml_usage.md`).
+
+## 6. E2: designed vs baseline evaluation
 - Visual: `results/e2_results.png`.
 - As tiger: 48 W · 2 D · 0 L (96%, CI 86–99%). As goat: 16 W · 9 D · 25 L (32%, CI 21–46%).
 - All draws by threefold repetition; no game hit the move cap.
 - Talking point: as tiger, the threat and mobility terms set up double attacks that a capture-only goat can't see coming. As goat, the job is harder: one oversight loses a goat, and depth 3 can't see a double attack being prepared two moves ahead. The designed goat's 16 wins were all traps of a tiger that ignores mobility.
 
-## 6. Live demo and takeaways
+## 7. Live demo and takeaways
 - Demo: `python -m baghchal analyse --board "<examiner's position>" --to-move … --depth 4`, which prints move, score, nodes, time and PV in ~10 ms.
-- Talking point: depth is limited to 3–4, there is no move ordering, and the weights were reasoned rather than tuned. Next: captures-first move ordering, a short weight-tuning round-robin, and iterative deepening with a time limit.
+- Talking point: depth is limited to 3–4, the agent plays in fixed rule order (E3 shows a heuristic order would cut nodes about threefold), and the weights were reasoned rather than tuned. Next: a cheap captures-first move ordering, a short weight-tuning round-robin, and iterative deepening with a time limit.
 - Declaration: Claude Code (Anthropic) wrote the code, including the search and evaluation, and the report text, at Pranav's direction; full details in report §8.

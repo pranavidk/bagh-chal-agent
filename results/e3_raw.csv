@@ -1,0 +1,451 @@
+position_id,phase,to_move,depth,config,nodes,evals,time_ms,score,move
+P01,placement,GOAT,2,minimax,358,340,1.137,49,G@0
+P01,placement,GOAT,2,ab_worst,349,331,2.98,49,G@0
+P01,placement,GOAT,2,ab_natural,72,54,0.179,49,G@0
+P01,placement,GOAT,2,ab_heuristic,72,54,1.052,49,G@0
+P01,placement,GOAT,2,ab_best,54,36,2.064,49,G@0
+P02,placement,TIGER,2,minimax,305,288,1.014,135,T 0-6
+P02,placement,TIGER,2,ab_worst,305,288,3.22,135,T 0-6
+P02,placement,TIGER,2,ab_natural,108,91,0.364,135,T 0-6
+P02,placement,TIGER,2,ab_heuristic,67,50,0.88,135,T 0-6
+P02,placement,TIGER,2,ab_best,50,33,2.106,135,T 0-6
+P03,placement,TIGER,2,minimax,242,227,0.792,125,T 11x16>21
+P03,placement,TIGER,2,ab_worst,242,227,2.57,125,T 11x16>21
+P03,placement,TIGER,2,ab_natural,123,108,0.391,125,T 11x16>21
+P03,placement,TIGER,2,ab_heuristic,45,30,0.788,125,T 11x16>21
+P03,placement,TIGER,2,ab_best,45,30,1.594,125,T 11x16>21
+P04,placement,GOAT,2,minimax,251,233,0.693,227,G@9
+P04,placement,GOAT,2,ab_worst,249,231,2.117,227,G@9
+P04,placement,GOAT,2,ab_natural,76,58,0.203,227,G@9
+P04,placement,GOAT,2,ab_heuristic,59,41,0.833,227,G@9
+P04,placement,GOAT,2,ab_best,47,29,1.583,227,G@9
+P05,placement,TIGER,2,minimax,305,285,1.068,115,T 8-7
+P05,placement,TIGER,2,ab_worst,305,285,3.122,115,T 8-7
+P05,placement,TIGER,2,ab_natural,111,91,0.365,115,T 8-7
+P05,placement,TIGER,2,ab_heuristic,67,47,1.002,115,T 8-7
+P05,placement,TIGER,2,ab_best,53,33,2.362,115,T 8-7
+P06,placement,GOAT,2,minimax,246,230,0.699,127,G@9
+P06,placement,GOAT,2,ab_worst,246,230,1.966,127,G@9
+P06,placement,GOAT,2,ab_natural,93,77,0.228,127,G@9
+P06,placement,GOAT,2,ab_heuristic,44,28,0.691,127,G@9
+P06,placement,GOAT,2,ab_best,44,28,1.365,127,G@9
+P07,placement,GOAT,2,minimax,253,238,0.677,112,G@15
+P07,placement,GOAT,2,ab_worst,253,238,2.124,112,G@15
+P07,placement,GOAT,2,ab_natural,196,181,0.588,112,G@15
+P07,placement,GOAT,2,ab_heuristic,45,30,0.771,112,G@15
+P07,placement,GOAT,2,ab_best,45,30,1.41,112,G@15
+P08,placement,TIGER,2,minimax,225,208,0.807,-2,T 3-8
+P08,placement,TIGER,2,ab_worst,225,208,2.267,-2,T 3-8
+P08,placement,TIGER,2,ab_natural,63,46,0.21,-2,T 3-8
+P08,placement,TIGER,2,ab_heuristic,57,40,0.749,-2,T 18-19
+P08,placement,TIGER,2,ab_best,45,28,1.755,-2,T 3-8
+P09,placement,GOAT,2,minimax,186,165,0.516,427,G@18
+P09,placement,GOAT,2,ab_worst,183,162,1.493,427,G@18
+P09,placement,GOAT,2,ab_natural,79,62,0.196,427,G@18
+P09,placement,GOAT,2,ab_heuristic,52,32,0.596,427,G@18
+P09,placement,GOAT,2,ab_best,43,23,0.958,427,G@18
+P10,placement,TIGER,2,minimax,240,224,0.839,999999,T 21x16>11
+P10,placement,TIGER,2,ab_worst,240,224,2.455,999999,T 21x16>11
+P10,placement,TIGER,2,ab_natural,88,72,0.296,999999,T 21x16>11
+P10,placement,TIGER,2,ab_heuristic,30,14,0.715,999999,T 21x16>11
+P10,placement,TIGER,2,ab_best,30,14,1.645,999999,T 21x16>11
+P11,placement,GOAT,2,minimax,174,161,0.46,317,G@0
+P11,placement,GOAT,2,ab_worst,174,161,1.35,317,G@0
+P11,placement,GOAT,2,ab_natural,123,110,0.322,317,G@0
+P11,placement,GOAT,2,ab_heuristic,61,48,0.603,317,G@0
+P11,placement,GOAT,2,ab_best,37,24,1.032,317,G@0
+P12,placement,GOAT,2,minimax,74,66,0.217,-44,G@20
+P12,placement,GOAT,2,ab_worst,68,60,0.598,-44,G@20
+P12,placement,GOAT,2,ab_natural,36,28,0.101,-44,G@20
+P12,placement,GOAT,2,ab_heuristic,38,30,0.311,-44,G@20
+P12,placement,GOAT,2,ab_best,24,16,0.467,-44,G@20
+P13,placement,TIGER,2,minimax,121,108,0.464,146,T 14-19
+P13,placement,TIGER,2,ab_worst,121,108,1.306,146,T 14-19
+P13,placement,TIGER,2,ab_natural,44,31,0.147,146,T 14-19
+P13,placement,TIGER,2,ab_heuristic,33,20,0.417,146,T 14-19
+P13,placement,TIGER,2,ab_best,33,20,0.876,146,T 14-19
+P14,placement,TIGER,2,minimax,89,77,0.296,156,T 17-18
+P14,placement,TIGER,2,ab_worst,89,77,0.862,156,T 17-18
+P14,placement,TIGER,2,ab_natural,54,42,0.168,156,T 17-18
+P14,placement,TIGER,2,ab_heuristic,29,17,0.3,156,T 17-18
+P14,placement,TIGER,2,ab_best,29,17,0.629,156,T 17-18
+P15,placement,GOAT,2,minimax,40,32,0.104,144,G@6
+P15,placement,GOAT,2,ab_worst,40,32,0.285,144,G@6
+P15,placement,GOAT,2,ab_natural,29,21,0.069,144,G@6
+P15,placement,GOAT,2,ab_heuristic,18,10,0.165,144,G@6
+P15,placement,GOAT,2,ab_best,18,10,0.241,144,G@6
+M01,movement,GOAT,2,minimax,38,29,0.163,116,G 5-0
+M01,movement,GOAT,2,ab_worst,38,29,0.436,116,G 5-0
+M01,movement,GOAT,2,ab_natural,19,10,0.062,116,G 5-0
+M01,movement,GOAT,2,ab_heuristic,19,10,0.171,116,G 5-0
+M01,movement,GOAT,2,ab_best,18,9,0.335,116,G 5-0
+M02,movement,GOAT,2,minimax,88,73,0.361,353,G 1-0
+M02,movement,GOAT,2,ab_worst,87,72,1.052,353,G 1-0
+M02,movement,GOAT,2,ab_natural,27,16,0.114,353,G 1-0
+M02,movement,GOAT,2,ab_heuristic,26,13,0.365,353,G 1-0
+M02,movement,GOAT,2,ab_best,26,13,0.777,353,G 1-0
+M03,movement,GOAT,2,minimax,62,39,0.225,257,G 15-16
+M03,movement,GOAT,2,ab_worst,62,39,0.65,257,G 15-16
+M03,movement,GOAT,2,ab_natural,45,24,0.132,257,G 15-16
+M03,movement,GOAT,2,ab_heuristic,33,10,0.229,257,G 15-16
+M03,movement,GOAT,2,ab_best,31,8,0.436,257,G 15-16
+M04,movement,TIGER,2,minimax,38,35,0.125,222,T 18-12
+M04,movement,TIGER,2,ab_worst,38,35,0.351,222,T 18-12
+M04,movement,TIGER,2,ab_natural,31,28,0.112,222,T 18-12
+M04,movement,TIGER,2,ab_heuristic,20,17,0.163,222,T 18-12
+M04,movement,TIGER,2,ab_best,20,17,0.3,222,T 18-12
+M05,movement,TIGER,2,minimax,84,77,0.282,999999,T 19x18>17
+M05,movement,TIGER,2,ab_worst,84,77,0.812,999999,T 19x18>17
+M05,movement,TIGER,2,ab_natural,62,55,0.202,999999,T 19x18>17
+M05,movement,TIGER,2,ab_heuristic,12,5,0.256,999999,T 19x18>17
+M05,movement,TIGER,2,ab_best,12,5,0.591,999999,T 19x18>17
+M06,movement,GOAT,2,minimax,68,58,0.282,232,G 10-5
+M06,movement,GOAT,2,ab_worst,68,58,0.828,232,G 10-5
+M06,movement,GOAT,2,ab_natural,58,48,0.241,232,G 10-5
+M06,movement,GOAT,2,ab_heuristic,25,15,0.286,232,G 10-5
+M06,movement,GOAT,2,ab_best,25,15,0.68,232,G 10-5
+M07,movement,GOAT,2,minimax,81,66,0.325,183,G 21-16
+M07,movement,GOAT,2,ab_worst,81,66,0.971,183,G 21-16
+M07,movement,GOAT,2,ab_natural,51,36,0.182,183,G 21-16
+M07,movement,GOAT,2,ab_heuristic,30,15,0.338,183,G 21-16
+M07,movement,GOAT,2,ab_best,30,15,0.659,183,G 21-16
+M08,movement,TIGER,2,minimax,17,12,0.057,-101,T 12x11>10
+M08,movement,TIGER,2,ab_worst,17,12,0.141,-101,T 12x11>10
+M08,movement,TIGER,2,ab_natural,13,9,0.038,-101,T 12x11>10
+M08,movement,TIGER,2,ab_heuristic,13,8,0.079,-101,T 12x11>10
+M08,movement,TIGER,2,ab_best,13,8,0.134,-101,T 12x11>10
+M09,movement,TIGER,2,minimax,69,61,0.242,277,T 16-20
+M09,movement,TIGER,2,ab_worst,69,61,0.684,277,T 16-20
+M09,movement,TIGER,2,ab_natural,46,38,0.145,277,T 16-20
+M09,movement,TIGER,2,ab_heuristic,25,17,0.247,277,T 16-20
+M09,movement,TIGER,2,ab_best,25,17,0.493,277,T 16-20
+M10,movement,TIGER,2,minimax,52,45,0.187,321,T 24-23
+M10,movement,TIGER,2,ab_worst,52,45,0.553,321,T 24-23
+M10,movement,TIGER,2,ab_natural,27,20,0.088,321,T 24-23
+M10,movement,TIGER,2,ab_heuristic,27,20,0.245,321,T 24-23
+M10,movement,TIGER,2,ab_best,20,13,0.417,321,T 24-23
+M11,movement,TIGER,2,minimax,63,57,0.24,214,T 12-13
+M11,movement,TIGER,2,ab_worst,63,57,0.683,214,T 12-13
+M11,movement,TIGER,2,ab_natural,46,40,0.164,214,T 12-13
+M11,movement,TIGER,2,ab_heuristic,19,13,0.234,214,T 12-13
+M11,movement,TIGER,2,ab_best,19,13,0.52,214,T 12-13
+M12,movement,GOAT,2,minimax,68,60,0.289,232,G 19-24
+M12,movement,GOAT,2,ab_worst,68,60,0.796,232,G 19-24
+M12,movement,GOAT,2,ab_natural,53,45,0.236,232,G 19-24
+M12,movement,GOAT,2,ab_heuristic,21,13,0.27,232,G 19-24
+M12,movement,GOAT,2,ab_best,21,13,0.616,232,G 19-24
+M13,movement,TIGER,2,minimax,112,103,0.4,346,T 13-18
+M13,movement,TIGER,2,ab_worst,112,103,1.191,346,T 13-18
+M13,movement,TIGER,2,ab_natural,62,53,0.222,346,T 13-18
+M13,movement,TIGER,2,ab_heuristic,38,29,0.42,346,T 13-18
+M13,movement,TIGER,2,ab_best,28,19,0.844,346,T 13-18
+M14,movement,GOAT,2,minimax,97,74,0.392,352,G 18-22
+M14,movement,GOAT,2,ab_worst,96,74,1.088,352,G 18-22
+M14,movement,GOAT,2,ab_natural,58,38,0.224,352,G 18-22
+M14,movement,GOAT,2,ab_heuristic,42,20,0.408,352,G 18-22
+M14,movement,GOAT,2,ab_best,32,10,0.861,352,G 18-22
+M15,movement,GOAT,2,minimax,117,90,0.478,342,G 5-10
+M15,movement,GOAT,2,ab_worst,114,90,1.389,342,G 5-10
+M15,movement,GOAT,2,ab_natural,48,29,0.166,342,G 5-10
+M15,movement,GOAT,2,ab_heuristic,32,10,0.393,342,G 5-10
+M15,movement,GOAT,2,ab_best,32,10,0.897,342,G 5-10
+P01,placement,GOAT,3,minimax,5802,5444,20.12,29,G@0
+P01,placement,GOAT,3,ab_worst,5673,5321,64.612,29,G@0
+P01,placement,GOAT,3,ab_natural,604,529,2.106,29,G@0
+P01,placement,GOAT,3,ab_heuristic,432,359,4.542,29,G@0
+P01,placement,GOAT,3,ab_best,349,295,28.804,29,G@0
+P02,placement,TIGER,3,minimax,4399,4094,11.215,147,T 0-6
+P02,placement,TIGER,3,ab_worst,4273,3974,37.853,147,T 0-6
+P02,placement,TIGER,3,ab_natural,1606,1445,4.167,147,T 0-6
+P02,placement,TIGER,3,ab_heuristic,338,269,3.699,147,T 0-6
+P02,placement,TIGER,3,ab_best,283,233,18.43,147,T 0-6
+P03,placement,TIGER,3,minimax,3051,2809,7.797,243,T 11x12>13
+P03,placement,TIGER,3,ab_worst,3049,2807,28.577,243,T 11x12>13
+P03,placement,TIGER,3,ab_natural,825,719,2.076,243,T 11x12>13
+P03,placement,TIGER,3,ab_heuristic,280,219,2.827,243,T 11x12>13
+P03,placement,TIGER,3,ab_best,226,181,16.034,243,T 11x12>13
+P04,placement,GOAT,3,minimax,3988,3737,19.671,219,G@9
+P04,placement,GOAT,3,ab_worst,3936,3687,56.259,219,G@9
+P04,placement,GOAT,3,ab_natural,1047,940,3.84,219,G@9
+P04,placement,GOAT,3,ab_heuristic,487,432,3.992,219,G@10
+P04,placement,GOAT,3,ab_best,336,289,23.963,219,G@9
+P05,placement,TIGER,3,minimax,4737,4432,12.891,133,T 8-7
+P05,placement,TIGER,3,ab_worst,4709,4404,43.068,133,T 8-7
+P05,placement,TIGER,3,ab_natural,840,743,2.196,133,T 8-7
+P05,placement,TIGER,3,ab_heuristic,416,343,4.262,133,T 8-7
+P05,placement,TIGER,3,ab_best,367,314,19.934,133,T 8-7
+P06,placement,GOAT,3,minimax,3486,3240,11.852,119,G@9
+P06,placement,GOAT,3,ab_worst,3457,3211,39.3,119,G@9
+P06,placement,GOAT,3,ab_natural,754,639,2.554,119,G@9
+P06,placement,GOAT,3,ab_heuristic,281,237,2.656,119,G@9
+P06,placement,GOAT,3,ab_best,281,237,18.474,119,G@9
+P07,placement,GOAT,3,minimax,3364,3111,11.514,100,G@15
+P07,placement,GOAT,3,ab_worst,3363,3110,40.881,100,G@15
+P07,placement,GOAT,3,ab_natural,1658,1459,5.656,100,G@15
+P07,placement,GOAT,3,ab_heuristic,268,223,2.574,100,G@15
+P07,placement,GOAT,3,ab_best,256,211,20.495,100,G@15
+P08,placement,TIGER,3,minimax,3055,2830,8.503,11,T 3-8
+P08,placement,TIGER,3,ab_worst,3017,2793,29.506,11,T 3-8
+P08,placement,TIGER,3,ab_natural,526,463,1.46,11,T 3-8
+P08,placement,TIGER,3,ab_heuristic,356,284,3.873,11,T 3-8
+P08,placement,TIGER,3,ab_best,272,227,14.668,11,T 3-8
+P09,placement,GOAT,3,minimax,2661,2475,8.779,403,G@2
+P09,placement,GOAT,3,ab_worst,2656,2470,29.31,403,G@2
+P09,placement,GOAT,3,ab_natural,611,541,1.997,403,G@2
+P09,placement,GOAT,3,ab_heuristic,262,219,2.189,403,G@2
+P09,placement,GOAT,3,ab_best,246,204,14.221,403,G@2
+P10,placement,TIGER,3,minimax,3535,2970,9.109,999999,T 21x16>11
+P10,placement,TIGER,3,ab_worst,1625,1415,23.377,999999,T 21x16>11
+P10,placement,TIGER,3,ab_natural,671,546,1.809,999999,T 21x16>11
+P10,placement,TIGER,3,ab_heuristic,230,188,1.834,999999,T 21x16>11
+P10,placement,TIGER,3,ab_best,237,195,16.814,999999,T 21x16>11
+P11,placement,GOAT,3,minimax,1974,1800,7.208,290,G@15
+P11,placement,GOAT,3,ab_worst,1974,1800,25.565,290,G@15
+P11,placement,GOAT,3,ab_natural,725,612,2.516,290,G@15
+P11,placement,GOAT,3,ab_heuristic,300,226,3.281,290,G@15
+P11,placement,GOAT,3,ab_best,195,157,12.625,290,G@15
+P12,placement,GOAT,3,minimax,470,396,1.769,-54,G@1
+P12,placement,GOAT,3,ab_worst,449,378,5.7,-54,G@1
+P12,placement,GOAT,3,ab_natural,132,97,0.438,-54,G@1
+P12,placement,GOAT,3,ab_heuristic,103,75,0.882,-54,G@11
+P12,placement,GOAT,3,ab_best,75,51,3.011,-54,G@1
+P13,placement,TIGER,3,minimax,1132,1011,3.501,150,T 18-24
+P13,placement,TIGER,3,ab_worst,1127,1006,11.962,150,T 18-24
+P13,placement,TIGER,3,ab_natural,290,234,0.809,150,T 18-24
+P13,placement,TIGER,3,ab_heuristic,254,200,2.215,150,T 18-24
+P13,placement,TIGER,3,ab_best,147,114,6.308,150,T 18-24
+P14,placement,TIGER,3,minimax,743,654,2.316,158,T 17-18
+P14,placement,TIGER,3,ab_worst,728,640,7.476,158,T 17-18
+P14,placement,TIGER,3,ab_natural,364,298,1.061,158,T 17-18
+P14,placement,TIGER,3,ab_heuristic,197,159,1.484,158,T 17-18
+P14,placement,TIGER,3,ab_best,125,96,4.174,158,T 17-18
+P15,placement,GOAT,3,minimax,234,194,0.774,93,G@6
+P15,placement,GOAT,3,ab_worst,234,194,2.792,93,G@6
+P15,placement,GOAT,3,ab_natural,104,79,0.357,93,G@6
+P15,placement,GOAT,3,ab_heuristic,65,47,0.513,93,G@6
+P15,placement,GOAT,3,ab_best,65,47,1.828,93,G@6
+M01,movement,GOAT,3,minimax,352,314,1.314,32,G 5-0
+M01,movement,GOAT,3,ab_worst,352,314,4.463,32,G 5-0
+M01,movement,GOAT,3,ab_natural,121,102,0.471,32,G 5-0
+M01,movement,GOAT,3,ab_heuristic,117,98,0.85,32,G 5-0
+M01,movement,GOAT,3,ab_best,115,97,2.85,32,G 5-0
+M02,movement,GOAT,3,minimax,922,834,3.987,341,G 14-13
+M02,movement,GOAT,3,ab_worst,922,834,12.68,341,G 14-13
+M02,movement,GOAT,3,ab_natural,486,423,1.875,341,G 14-13
+M02,movement,GOAT,3,ab_heuristic,197,157,1.9,341,G 14-13
+M02,movement,GOAT,3,ab_best,88,62,6.763,341,G 14-13
+M03,movement,GOAT,3,minimax,615,553,2.171,193,G 18-24
+M03,movement,GOAT,3,ab_worst,615,553,7.167,193,G 18-24
+M03,movement,GOAT,3,ab_natural,326,279,1.161,193,G 18-24
+M03,movement,GOAT,3,ab_heuristic,118,83,0.997,193,G 18-24
+M03,movement,GOAT,3,ab_best,110,79,3.797,193,G 18-24
+M04,movement,TIGER,3,minimax,175,121,0.694,234,T 18-12
+M04,movement,TIGER,3,ab_worst,174,121,2.257,234,T 18-12
+M04,movement,TIGER,3,ab_natural,93,52,0.304,234,T 18-12
+M04,movement,TIGER,3,ab_heuristic,40,10,0.502,234,T 18-12
+M04,movement,TIGER,3,ab_best,40,10,1.358,234,T 18-12
+M05,movement,TIGER,3,minimax,565,372,1.96,999999,T 19x18>17
+M05,movement,TIGER,3,ab_worst,522,370,7.481,999999,T 19x18>17
+M05,movement,TIGER,3,ab_natural,282,174,0.978,999999,T 19x18>17
+M05,movement,TIGER,3,ab_heuristic,39,23,0.441,999999,T 19x18>17
+M05,movement,TIGER,3,ab_best,41,29,3.398,999999,T 19x18>17
+M06,movement,GOAT,3,minimax,756,688,2.912,185,G 10-5
+M06,movement,GOAT,3,ab_worst,755,687,9.451,185,G 10-5
+M06,movement,GOAT,3,ab_natural,232,179,0.917,185,G 10-5
+M06,movement,GOAT,3,ab_heuristic,155,128,1.277,185,G 10-5
+M06,movement,GOAT,3,ab_best,116,91,4.915,185,G 10-5
+M07,movement,GOAT,3,minimax,921,840,3.21,156,G 21-16
+M07,movement,GOAT,3,ab_worst,921,840,11.558,156,G 21-16
+M07,movement,GOAT,3,ab_natural,264,223,0.921,156,G 21-16
+M07,movement,GOAT,3,ab_heuristic,236,206,1.672,156,G 21-16
+M07,movement,GOAT,3,ab_best,218,188,6.211,156,G 21-16
+M08,movement,TIGER,3,minimax,50,33,0.192,-28,T 15-10
+M08,movement,TIGER,3,ab_worst,50,33,0.638,-28,T 15-10
+M08,movement,TIGER,3,ab_natural,30,17,0.147,-28,T 15-10
+M08,movement,TIGER,3,ab_heuristic,23,10,0.212,-28,T 15-10
+M08,movement,TIGER,3,ab_best,11,4,0.378,-28,T 15-10
+M09,movement,TIGER,3,minimax,366,245,1.34,287,T 16-11
+M09,movement,TIGER,3,ab_worst,353,245,4.778,287,T 16-11
+M09,movement,TIGER,3,ab_natural,173,114,0.622,287,T 16-11
+M09,movement,TIGER,3,ab_heuristic,83,37,0.801,287,T 16-11
+M09,movement,TIGER,3,ab_best,62,35,2.641,287,T 16-11
+M10,movement,TIGER,3,minimax,387,299,1.458,334,T 24-23
+M10,movement,TIGER,3,ab_worst,383,299,5.6,334,T 24-23
+M10,movement,TIGER,3,ab_natural,252,172,0.917,334,T 24-23
+M10,movement,TIGER,3,ab_heuristic,104,60,0.992,334,T 24-23
+M10,movement,TIGER,3,ab_best,68,42,3.097,334,T 24-23
+M11,movement,TIGER,3,minimax,358,295,1.547,227,T 12-11
+M11,movement,TIGER,3,ab_worst,350,288,5.226,227,T 12-11
+M11,movement,TIGER,3,ab_natural,197,146,0.802,227,T 12-11
+M11,movement,TIGER,3,ab_heuristic,79,55,0.786,227,T 12-13
+M11,movement,TIGER,3,ab_best,54,33,2.891,227,T 12-11
+M12,movement,GOAT,3,minimax,648,580,2.467,195,G 19-24
+M12,movement,GOAT,3,ab_worst,648,580,8.576,195,G 19-24
+M12,movement,GOAT,3,ab_natural,204,162,0.792,195,G 19-24
+M12,movement,GOAT,3,ab_heuristic,127,102,1.348,195,G 19-24
+M12,movement,GOAT,3,ab_best,96,75,4.352,195,G 19-24
+M13,movement,TIGER,3,minimax,817,624,3.107,352,T 11-16
+M13,movement,TIGER,3,ab_worst,788,615,10.579,352,T 11-16
+M13,movement,TIGER,3,ab_natural,337,223,1.173,352,T 11-16
+M13,movement,TIGER,3,ab_heuristic,162,105,1.488,352,T 11-16
+M13,movement,TIGER,3,ab_best,91,60,5.501,352,T 11-16
+M14,movement,GOAT,3,minimax,988,891,3.603,338,G 20-21
+M14,movement,GOAT,3,ab_worst,987,891,12.537,338,G 20-21
+M14,movement,GOAT,3,ab_natural,434,370,1.526,338,G 20-21
+M14,movement,GOAT,3,ab_heuristic,88,53,1.027,338,G 20-21
+M14,movement,GOAT,3,ab_best,70,39,6.001,338,G 20-21
+M15,movement,GOAT,3,minimax,1415,1298,5.288,342,G 6-10
+M15,movement,GOAT,3,ab_worst,1411,1297,17.493,342,G 6-10
+M15,movement,GOAT,3,ab_natural,262,209,0.944,342,G 6-10
+M15,movement,GOAT,3,ab_heuristic,142,100,1.545,342,G 6-10
+M15,movement,GOAT,3,ab_best,77,44,7.512,342,G 6-10
+P01,placement,GOAT,4,minimax,97041,91239,256.41,43,G@0
+P01,placement,GOAT,4,ab_worst,88322,82607,898.588,43,G@0
+P01,placement,GOAT,4,ab_natural,2627,2059,7.095,43,G@0
+P01,placement,GOAT,4,ab_heuristic,2279,1638,39.615,43,G@0
+P01,placement,GOAT,4,ab_best,946,597,208.62,43,G@0
+P02,placement,TIGER,4,minimax,74215,69816,244.824,130,T 0-5
+P02,placement,TIGER,4,ab_worst,63869,59510,880.483,130,T 0-5
+P02,placement,TIGER,4,ab_natural,9195,7680,30.19,130,T 0-5
+P02,placement,TIGER,4,ab_heuristic,872,571,14.75,130,T 0-5
+P02,placement,TIGER,4,ab_best,817,536,221.32,130,T 0-5
+P03,placement,TIGER,4,minimax,46607,43556,149.125,213,T 15x10>5
+P03,placement,TIGER,4,ab_worst,23417,20366,489.458,213,T 15x10>5
+P03,placement,TIGER,4,ab_natural,6223,5167,18.945,213,T 15x10>5
+P03,placement,TIGER,4,ab_heuristic,1363,1051,15.795,213,T 15x10>5
+P03,placement,TIGER,4,ab_best,677,452,159.0,213,T 15x10>5
+P04,placement,GOAT,4,minimax,58269,54281,159.46,228,G@9
+P04,placement,GOAT,4,ab_worst,50215,46373,544.572,228,G@9
+P04,placement,GOAT,4,ab_natural,4525,3657,11.964,228,G@9
+P04,placement,GOAT,4,ab_heuristic,1329,849,22.17,228,G@9
+P04,placement,GOAT,4,ab_best,778,445,136.489,228,G@9
+P05,placement,TIGER,4,minimax,66947,62210,227.25,109,T 8-7
+P05,placement,TIGER,4,ab_worst,51815,47135,739.37,109,T 8-7
+P05,placement,TIGER,4,ab_natural,4804,3818,15.199,109,T 8-7
+P05,placement,TIGER,4,ab_heuristic,1559,1095,21.344,109,T 8-7
+P05,placement,TIGER,4,ab_best,884,520,174.437,109,T 8-7
+P06,placement,GOAT,4,minimax,46325,42839,118.945,128,G@9
+P06,placement,GOAT,4,ab_worst,44689,41215,443.29,128,G@9
+P06,placement,GOAT,4,ab_natural,3876,3200,9.942,128,G@9
+P06,placement,GOAT,4,ab_heuristic,661,380,11.886,128,G@9
+P06,placement,GOAT,4,ab_best,663,382,115.786,128,G@9
+P07,placement,GOAT,4,minimax,45746,42382,118.149,109,G@15
+P07,placement,GOAT,4,ab_worst,44825,41461,485.601,109,G@15
+P07,placement,GOAT,4,ab_natural,17079,15111,44.029,109,G@15
+P07,placement,GOAT,4,ab_heuristic,720,450,12.035,109,G@15
+P07,placement,GOAT,4,ab_best,675,419,160.711,109,G@15
+P08,placement,TIGER,4,minimax,37109,34054,125.237,-8,T 12-7
+P08,placement,TIGER,4,ab_worst,25524,22500,403.468,-8,T 12-7
+P08,placement,TIGER,4,ab_natural,2086,1539,6.643,-8,T 12-7
+P08,placement,TIGER,4,ab_heuristic,786,473,12.013,-8,T 12-7
+P08,placement,TIGER,4,ab_best,650,380,103.85,-8,T 12-7
+P09,placement,GOAT,4,minimax,29107,23156,84.35,999996,G@0
+P09,placement,GOAT,4,ab_worst,14530,12358,163.61,999996,G@0
+P09,placement,GOAT,4,ab_natural,2110,1231,4.761,999996,G@0
+P09,placement,GOAT,4,ab_heuristic,531,83,9.017,999996,G@2
+P09,placement,GOAT,4,ab_best,518,68,62.151,999996,G@0
+P10,placement,TIGER,4,minimax,48085,44550,168.252,999999,T 21x16>11
+P10,placement,TIGER,4,ab_worst,17838,16218,324.105,999999,T 21x16>11
+P10,placement,TIGER,4,ab_natural,2353,1682,7.338,999999,T 21x16>11
+P10,placement,TIGER,4,ab_heuristic,418,188,9.364,999999,T 21x16>11
+P10,placement,TIGER,4,ab_best,432,195,134.854,999999,T 21x16>11
+P11,placement,GOAT,4,minimax,22947,20973,64.589,392,G@15
+P11,placement,GOAT,4,ab_worst,22306,20373,237.041,392,G@15
+P11,placement,GOAT,4,ab_natural,4203,3523,11.747,392,G@15
+P11,placement,GOAT,4,ab_heuristic,1120,811,12.875,392,G@15
+P11,placement,GOAT,4,ab_best,494,299,72.093,392,G@15
+P12,placement,GOAT,4,minimax,3335,2865,9.431,-51,G@1
+P12,placement,GOAT,4,ab_worst,1781,1507,25.999,-51,G@1
+P12,placement,GOAT,4,ab_natural,436,316,1.266,-51,G@1
+P12,placement,GOAT,4,ab_heuristic,404,272,3.888,-51,G@20
+P12,placement,GOAT,4,ab_best,183,108,14.349,-51,G@1
+P13,placement,TIGER,4,minimax,9255,8123,31.872,138,T 8-3
+P13,placement,TIGER,4,ab_worst,7474,6385,117.171,138,T 8-3
+P13,placement,TIGER,4,ab_natural,770,532,2.47,138,T 8-3
+P13,placement,TIGER,4,ab_heuristic,593,375,6.786,138,T 21-22
+P13,placement,TIGER,4,ab_best,330,182,41.866,138,T 8-3
+P14,placement,TIGER,4,minimax,4697,3954,16.125,143,T 16-20
+P14,placement,TIGER,4,ab_worst,4053,3310,59.683,143,T 16-20
+P14,placement,TIGER,4,ab_natural,1222,833,3.918,143,T 16-20
+P14,placement,TIGER,4,ab_heuristic,589,353,5.938,143,T 17-18
+P14,placement,TIGER,4,ab_best,276,143,22.02,143,T 16-20
+P15,placement,GOAT,4,minimax,1444,1210,4.097,139,G@6
+P15,placement,GOAT,4,ab_worst,1358,1124,14.965,139,G@6
+P15,placement,GOAT,4,ab_natural,286,204,0.75,139,G@6
+P15,placement,GOAT,4,ab_heuristic,145,79,1.688,139,G@6
+P15,placement,GOAT,4,ab_best,126,61,6.324,139,G@6
+M01,movement,GOAT,4,minimax,2014,1662,8.477,91,G 5-0
+M01,movement,GOAT,4,ab_worst,1905,1553,31.1,91,G 5-0
+M01,movement,GOAT,4,ab_natural,267,139,1.008,91,G 5-0
+M01,movement,GOAT,4,ab_heuristic,245,118,3.32,91,G 5-0
+M01,movement,GOAT,4,ab_best,215,100,13.546,91,G 5-0
+M02,movement,GOAT,4,minimax,7160,5261,28.11,356,G 1-0
+M02,movement,GOAT,4,ab_worst,5596,4341,89.444,356,G 1-0
+M02,movement,GOAT,4,ab_natural,931,524,3.051,356,G 1-0
+M02,movement,GOAT,4,ab_heuristic,501,189,6.649,356,G 1-0
+M02,movement,GOAT,4,ab_best,199,59,23.732,356,G 1-0
+M03,movement,GOAT,4,minimax,2396,1243,7.331,216,G 18-24
+M03,movement,GOAT,4,ab_worst,1802,997,24.101,216,G 18-24
+M03,movement,GOAT,4,ab_natural,629,194,1.579,216,G 18-24
+M03,movement,GOAT,4,ab_heuristic,239,50,2.265,216,G 18-24
+M03,movement,GOAT,4,ab_best,203,38,9.397,216,G 18-24
+M04,movement,TIGER,4,minimax,2193,2018,7.435,228,T 18-12
+M04,movement,TIGER,4,ab_worst,2192,2018,27.543,228,T 18-12
+M04,movement,TIGER,4,ab_natural,601,510,2.09,228,T 18-12
+M04,movement,TIGER,4,ab_heuristic,189,143,1.63,228,T 18-12
+M04,movement,TIGER,4,ab_best,145,104,11.012,228,T 18-12
+M05,movement,TIGER,4,minimax,6324,5759,22.364,999999,T 19x18>17
+M05,movement,TIGER,4,ab_worst,5760,5236,83.726,999999,T 19x18>17
+M05,movement,TIGER,4,ab_natural,1625,1311,5.534,999999,T 19x18>17
+M05,movement,TIGER,4,ab_heuristic,62,23,1.424,999999,T 19x18>17
+M05,movement,TIGER,4,ab_best,74,31,23.767,999999,T 19x18>17
+M06,movement,GOAT,4,minimax,4536,3721,18.989,225,G 10-5
+M06,movement,GOAT,4,ab_worst,4353,3580,70.909,225,G 10-5
+M06,movement,GOAT,4,ab_natural,845,599,3.199,225,G 10-5
+M06,movement,GOAT,4,ab_heuristic,318,120,4.119,225,G 10-5
+M06,movement,GOAT,4,ab_best,234,76,25.367,225,G 10-5
+M07,movement,GOAT,4,minimax,5589,4606,24.88,213,G 22-16
+M07,movement,GOAT,4,ab_worst,4805,3871,84.632,213,G 22-16
+M07,movement,GOAT,4,ab_natural,1035,646,3.78,213,G 22-16
+M07,movement,GOAT,4,ab_heuristic,488,194,5.846,213,G 22-16
+M07,movement,GOAT,4,ab_best,413,149,31.006,213,G 22-16
+M08,movement,TIGER,4,minimax,293,239,0.962,-91,T 15-10
+M08,movement,TIGER,4,ab_worst,290,236,3.847,-91,T 15-10
+M08,movement,TIGER,4,ab_natural,104,74,0.331,-91,T 15-10
+M08,movement,TIGER,4,ab_heuristic,76,53,0.532,-91,T 15-10
+M08,movement,TIGER,4,ab_best,17,6,1.346,-91,T 15-10
+M09,movement,TIGER,4,minimax,3136,2770,11.036,276,T 7-12
+M09,movement,TIGER,4,ab_worst,2835,2482,41.374,276,T 7-12
+M09,movement,TIGER,4,ab_natural,351,232,1.174,276,T 7-12
+M09,movement,TIGER,4,ab_heuristic,149,73,1.937,276,T 7-12
+M09,movement,TIGER,4,ab_best,111,53,14.152,276,T 7-12
+M10,movement,TIGER,4,minimax,3707,3320,13.558,314,T 13-18
+M10,movement,TIGER,4,ab_worst,3040,2657,46.351,314,T 13-18
+M10,movement,TIGER,4,ab_natural,818,585,2.708,314,T 13-18
+M10,movement,TIGER,4,ab_heuristic,286,164,3.793,314,T 24-18
+M10,movement,TIGER,4,ab_best,143,72,16.181,314,T 13-18
+M11,movement,TIGER,4,minimax,3951,3593,14.368,196,T 16-11
+M11,movement,TIGER,4,ab_worst,3736,3378,55.963,196,T 16-11
+M11,movement,TIGER,4,ab_natural,1206,1005,4.157,196,T 16-11
+M11,movement,TIGER,4,ab_heuristic,522,419,4.783,196,T 16-11
+M11,movement,TIGER,4,ab_best,231,176,19.484,196,T 16-11
+M12,movement,GOAT,4,minimax,4976,4116,21.011,291,G 19-24
+M12,movement,GOAT,4,ab_worst,4542,3836,76.62,291,G 19-24
+M12,movement,GOAT,4,ab_natural,735,508,2.757,291,G 19-24
+M12,movement,GOAT,4,ab_heuristic,287,117,3.924,291,G 19-24
+M12,movement,GOAT,4,ab_best,204,59,25.049,291,G 19-24
+M13,movement,TIGER,4,minimax,8845,8028,34.097,349,T 13-18
+M13,movement,TIGER,4,ab_worst,7536,6746,120.653,349,T 13-18
+M13,movement,TIGER,4,ab_natural,1474,1155,5.224,349,T 13-18
+M13,movement,TIGER,4,ab_heuristic,415,255,5.638,349,T 13-18
+M13,movement,TIGER,4,ab_best,190,101,36.232,349,T 13-18
+M14,movement,GOAT,4,minimax,6831,4587,24.148,352,G 18-22
+M14,movement,GOAT,4,ab_worst,5438,3980,85.333,352,G 18-22
+M14,movement,GOAT,4,ab_natural,1327,772,4.491,352,G 18-22
+M14,movement,GOAT,4,ab_heuristic,279,136,3.346,352,G 18-22
+M14,movement,GOAT,4,ab_best,156,65,26.595,352,G 18-22
+M15,movement,GOAT,4,minimax,11246,8228,42.431,349,G 5-10
+M15,movement,GOAT,4,ab_worst,10195,7911,148.274,349,G 5-10
+M15,movement,GOAT,4,ab_natural,752,440,2.615,349,G 5-10
+M15,movement,GOAT,4,ab_heuristic,280,99,3.66,349,G 5-10
+M15,movement,GOAT,4,ab_best,149,51,32.221,349,G 5-10
