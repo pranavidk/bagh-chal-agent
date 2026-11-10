@@ -9,11 +9,11 @@ const WIN = 1000000;
 const MAX_COMPARE_DEPTH = 4;
 
 export const CONFIGS = [
-  { key: "minimax", name: "Minimax", note: "visits every position; move order makes no difference", color: "#a9b8b2" },
-  { key: "ab_worst", name: "Alpha-beta, worst order", note: "worst move tried first at every turn: the worst case", color: "#d95926" },
-  { key: "ab_natural", name: "Alpha-beta, rule order", note: "how the agent actually plays (moves by point number)", color: "#3987e5" },
-  { key: "ab_heuristic", name: "Alpha-beta, heuristic order", note: "best-looking move first, by the evaluation", color: "#c98500" },
-  { key: "ab_best", name: "Alpha-beta, best order", note: "best move tried first at every turn: the best case", color: "#199e70" },
+  { key: "minimax", name: "Minimax", note: "visits every position; move order makes no difference", color: "#8f877a" },
+  { key: "ab_worst", name: "Alpha-beta, worst order", note: "worst move tried first at every turn: the worst case", color: "#c4573a" },
+  { key: "ab_natural", name: "Alpha-beta, rule order", note: "how the agent actually plays (moves by point number)", color: "#c7a25b" },
+  { key: "ab_heuristic", name: "Alpha-beta, heuristic order", note: "best-looking move first, by the evaluation", color: "#9db97a" },
+  { key: "ab_best", name: "Alpha-beta, best order", note: "best move tried first at every turn: the best case", color: "#f0e7d3" },
 ];
 const BY_KEY = Object.fromEntries(CONFIGS.map((c) => [c.key, c]));
 
@@ -46,7 +46,7 @@ function Bars({ rows }) {
           <li key={r.config} title={`${c.name}: ${fmt(r.nodes)} positions, ${fmt(r.time_ms, 1)} ms. ${c.note}.`}>
             <div className="bar-head">
               <span className="bar-name"><i style={{ background: c.color }} aria-hidden="true" />{c.name}</span>
-              <span className="bar-num">{fmt(r.nodes)}{r.config !== "minimax" && <em> · {pct(r.nodes, mm.nodes)}</em>}</span>
+              <span className="bar-num">{fmt(r.nodes)}{r.config !== "minimax" && <em> {pct(r.nodes, mm.nodes)}</em>}</span>
             </div>
             <div className="bar-track">
               <div className="bar-fill" style={{ width: `${Math.max(share * 100, 0.6)}%`, background: c.color }} />
@@ -111,7 +111,7 @@ export function ComparePanel({ game, pos, defaultDepth, evaluation, onShowResult
   const v = shown && verdict(shown);
   return (
     <section className="compare">
-      <h2>Minimax vs alpha-beta on this position</h2>
+      <h3>Minimax vs alpha-beta on this position</h3>
       <p className="help">Runs minimax and alpha-beta with four move orders on the board as it is now, and counts the positions each one searches.</p>
       <div className="compare-controls">
         <label htmlFor="cmp-depth" className="field-label">Depth</label>
@@ -127,7 +127,7 @@ export function ComparePanel({ game, pos, defaultDepth, evaluation, onShowResult
       {error && <p className="error" role="alert">{error}</p>}
       {shown && (
         <div aria-live="polite">
-          <p className="compare-meta">{shown.side === "GOAT" ? "Goats" : "Tigers"} to move · {shown.branching} legal moves · depth {shown.depth} · {shown.eval} evaluation</p>
+          <p className="compare-meta">{shown.side === "GOAT" ? "Goats" : "Tigers"} to move, {shown.branching} legal moves, depth {shown.depth}, {shown.eval} evaluation</p>
           <Bars rows={shown.rows} />
           <p className="winner">{v.winner}</p>
           <dl className="verdict">
@@ -136,7 +136,7 @@ export function ComparePanel({ game, pos, defaultDepth, evaluation, onShowResult
           <p className="help">The best and worst orders are measuring tools: they first find each move's true value with a separate search that isn't counted, so only their position counts mean anything.</p>
         </div>
       )}
-      <button type="button" className="link" onClick={onShowResults}>See the full experiment results (30 positions) →</button>
+      <button type="button" className="text-link" onClick={onShowResults}>See the full experiment results (30 positions)</button>
     </section>
   );
 }
@@ -246,7 +246,7 @@ export function ResultsPage({ onBack }) {
   return (
     <div className="results">
       <header className="results-head">
-        <button type="button" className="link" onClick={onBack}>← Back to the board</button>
+        <button type="button" className="text-link" onClick={onBack}>Back to the board</button>
         <h1>Minimax vs alpha-beta</h1>
         <p className="subtitle">The comparison, alpha-beta's best and worst case, and which algorithm wins when. Numbers are medians over the 30 fixed test positions (15 placement, 15 movement) with the designed evaluation; rebuild them with <code>python -m experiments e1</code> and <code>python -m e3</code>.</p>
       </header>

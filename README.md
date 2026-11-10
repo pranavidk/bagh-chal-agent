@@ -14,7 +14,7 @@ A Bagh-Chal (tigers and goats) game-playing agent using Minimax with Alpha-Beta 
 - **Done:** experiments E1 and E2 are run, with results, tables and plots committed in `results/`.
 - **Done:** report text, slides and implementation notes in `docs/report/` and `docs/`, written by Claude Code on 2026-10-22 at Pranav's direction (PRD §10); a viva guide in `docs/viva_guide.md`.
 - **Done:** experiment E3 (alpha-beta best/worst case under move ordering) with plots, the minimax vs alpha-beta comparison (`docs/algorithm_comparison.md`) and the AI/ML explanation (`docs/ai_ml_usage.md`), written by Claude Code on 2026-10-22 at Pranav's direction (PRD §10).
-- **Extra:** a local browser UI for playing the agent (`python -m web.server`); it is not part of the graded core.
+- **Extra:** a local 3D browser game for playing the agent (`python -m web.server`), written by Claude Code at Pranav's direction (PRD §10); it is not part of the graded core.
 - **Left for the team:** the `[CHECK]` items in the report (references, contributions, the declaration's final sentence), reviewing the `[DRAFT]` paragraphs in the implementation notes, Shalom's and Vishal's code reviews (prompts 2b and 3b in `docs/prompts.md`), building the slide deck, and viva practice.
 
 `search.py` and `evaluation.py` were written by Claude Code at Pranav's direction (see `docs/PRD.md` §10); Shalom and Vishal own and review them.
@@ -77,18 +77,56 @@ python benchmarks/bench_search.py    # minimax vs alpha-beta, depths 2-4, agains
 
 ## Play in the browser
 
-A local web UI (not part of the graded core, which is CLI-only per the PRD) talks to the same engine:
+A local 3D game (not part of the graded core, which is CLI-only per the PRD) on top of the same engine:
 
 ```bash
 python -m web.server            # then open http://127.0.0.1:8765
 ```
 
-Click a point to place a goat, or click a piece and then its destination. The panel shows the agent's move, score, positions searched, time and expected line, and a command to re-check any position with `analyse`.
+![The setup screen](docs/screenshots/setup.jpg)
+![A game against the agent](docs/screenshots/play.jpg)
+![Analysis: the search report, the expected line and the hint arrow](docs/screenshots/analysis.jpg)
 
-**Minimax vs alpha-beta in the browser.**
-- *Minimax vs alpha-beta on this position* (side panel): runs minimax and alpha-beta in worst, rule, heuristic and best move order on the board as it is, at depth 1–4. It shows the positions each search covered as bars, a same-score check, and a verdict on which algorithm wins and why.
-- The *results* link opens a page with the E1 and E3 charts and tables (alpha-beta's best and worst case, the uniform-tree formulas), the which-wins-when table and a short note on AI vs ML.
-- Both use the same engine code (`baghchal/ordering.py`, `results/*.csv`). The compiled bundle `web/static/app.js` is committed; to rebuild after editing `web/frontend/src/App.jsx`: `cd web/frontend && npm install && npm run build`.
+**Playing.** Choose a side (or watch the agent play itself) and how far the agent looks ahead, then begin.
+- Goats, placement: click any empty point. Goats, movement, and tigers: click a piece, then one of its marked points. A rust ring marks the goat a jump would capture.
+- Drag to turn the table, scroll or pinch to zoom, *Top view* for a straight-down board, *Point numbers* to engrave the indices 0–24.
+- *Undo* takes back your last move and the agent's reply; *Suggest a move* draws the search's choice as a green arrow. Click any move in the list to look back at that position.
+- Keyboard: Tab to the board, arrow keys to walk the 25 points, Enter to click a point, Esc to deselect or leave a review.
+- Unplaced goats wait beside the board and captured goats are set down on the other side, so the counts are also visible on the table.
+
+**Analysis** (top bar) keeps everything the earlier UI had:
+- The search report for the agent's last move or for *Analyse this position*: evaluation, positions searched, leaves evaluated, time, algorithm, depth, evaluation function and the expected line. Click a move of the line to see that future position on the board.
+- Engine settings: alpha-beta or minimax, designed or captures-only evaluation, depth.
+- *Minimax vs alpha-beta on this position*: minimax and alpha-beta in worst, rule, heuristic and best move order at depth 1–4, with a same-score check and a verdict.
+- The `analyse` command for the current position, and a form to start from any typed position.
+- *Experiment results* (setup screen and analysis) opens the E1 and E3 charts and tables.
+
+**How it is built.**
+- The Python engine is the only source of truth. The browser keeps the start position and the move list; `web/server.py` replays them through `baghchal.rules` and returns the position, the legal moves and the result. The front end has no rules of its own: a click becomes a move only if the engine listed it. The server and its API are unchanged by the 3D UI.
+- The board's engraved lines are drawn from the engine's own R1 edge list (`GET /api/topology`), so the picture cannot disagree with the rules.
+- Rendering is Three.js (WebGL), bundled with esbuild. All geometry and textures are procedural (no downloaded models or images) and the sounds are synthesised with Web Audio, so the only runtime download is two Google fonts, with system fallbacks.
+
+| `web/frontend/src/` | Role |
+|---|---|
+| `api.js` | Calls to the engine |
+| `game/useGame.js` | Move list, turns, agent moves, undo, review; no rules |
+| `three/scene.js` | The table: lighting, picking, move animation; reconciles its pieces to the engine's position |
+| `three/rig.js`, `pieces.js`, `textures.js`, `thumbs.js` | Camera, figurines, wood/brass/felt textures, setup portraits |
+| `audio/sound.js` | Synthesised sounds and the sound switch |
+| `ui/` | Setup, top bar, status panel, analysis, comparison, game over, flat board |
+
+The compiled bundle `web/static/app.js` is committed, so playing needs only Python. To rebuild after editing `web/frontend/src/`:
+
+```bash
+cd web/frontend && npm install && npm run build
+```
+
+**Known limitations.**
+- Without WebGL (or with `?flat` in the address) the game falls back to a flat 2D board; everything else works the same.
+- Reduced-motion settings turn off the move, camera and marker animation; pieces then jump straight to their points.
+- When the agent plays itself it waits for each piece to land, so a depth-1 game is paced by the animation, not the search.
+- The pieces are stylised procedural figurines, not sculpted models. The front end has no automated tests; it was checked by hand in the browser (see the commit message), and the API it relies on is covered by `tests/test_web.py`.
+- The bundle is about 740 kB because it includes Three.js.
 
 ## Results and report
 
